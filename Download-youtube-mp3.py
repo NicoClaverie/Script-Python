@@ -1,79 +1,71 @@
-# Penser a installer pytube et moviepy grace a `pip install pytube moviepy`
-
 import os
-from pytube import YouTube
-from moviepy.editor import *
+import subprocess
+import shlex
+from pytubefix import YouTube
 
 def telecharger_youtube_en_mp3(url, chemin_sortie="."):
-    """
-    Télécharge l'audio d'une vidéo YouTube et la convertit en MP3.
-
-    :param url: L'URL de la vidéo YouTube.
-    :param chemin_sortie: Le dossier où enregistrer le fichier MP3.
-    """
     try:
-        # --- 1. Téléchargement de la vidéo ---
         print(f"Connexion à l'URL : {url}")
         yt = YouTube(url)
-        print(f"Téléchargement de '{yt.title}'...")
-
-        # Sélection du meilleur flux audio disponible
         flux_audio = yt.streams.filter(only_audio=True).first()
         if not flux_audio:
-            print(f"❌ Aucun flux audio trouvé pour '{yt.title}'. Passage au suivant.")
-            return # On arrête le traitement pour CETTE vidéo
+            print(f"❌ Aucun flux audio trouvé pour '{yt.title}'.")
+            return
 
-        # Téléchargement du fichier audio (souvent au format .mp4 ou .webm)
+        print(f"Téléchargement de '{yt.title}'...")
         fichier_telecharge = flux_audio.download(output_path=chemin_sortie)
-        print("Téléchargement audio terminé.")
 
-        # --- 2. Conversion en MP3 ---
+        # Nom du fichier MP3
+        base, _ = os.path.splitext(fichier_telecharge)
+        fichier_mp3 = base + ".mp3"
+
+        # Utilisation de shlex.quote pour gérer les espaces et caractères spéciaux
+        input_file = shlex.quote(fichier_telecharge)
+        output_file = shlex.quote(fichier_mp3)
+
         print("Conversion en MP3...")
-        base, ext = os.path.splitext(fichier_telecharge)
-        fichier_mp3 = base + '.mp3'
+        subprocess.run(
+    f'ffmpeg -y -i "{fichier_telecharge}" -vn -ab 192k -ar 44100 -f mp3 "{fichier_mp3}"',
+    shell=True,
+    check=True
+)
 
-        # Chargement du fichier audio et écriture en MP3
-        clip_audio = AudioFileClip(fichier_telecharge)
-        clip_audio.write_audiofile(fichier_mp3, logger=None) # logger=None pour un affichage plus propre
-        clip_audio.close()
 
-        # --- 3. Nettoyage ---
+        # Supprimer le fichier source
         os.remove(fichier_telecharge)
         print(f"✅ Fichier '{os.path.basename(fichier_mp3)}' enregistré avec succès !")
 
     except Exception as e:
-        print(f"❌ Une erreur est survenue avec l'URL {url} : {e}")
-    # 👇 **INDSCRIVEZ ICI LE CHEMIN DE VOTRE DOSSIER** 👇
-    # Assurez-vous que le dossier existe !
-    
-    # Exemple pour Windows :
-    dossier_de_sortie = "C:/Users/claverie/Music" 
-    
-    # Exemple pour macOS ou Linux :
-    # dossier_de_sortie = "/Users/VotreNom/Music"
+        print(f"❌ Erreur avec l'URL {url} : {e}")
 
-    # Si vous voulez juste un sous-dossier nommé "MP3" là où se trouve le script :
-    # dossier_de_sortie = "MP3"
-    
-    print(f"🚀 Lancement du téléchargement pour {len(liste_urls)} vidéo(s).")
-    print(f"📁 Fichiers enregistrés dans : {os.path.abspath(dossier_de_sortie)}") # Affiche le chemin complet
-    
-# --- Utilisation du script ---
+
 if __name__ == "__main__":
-    # 👇 **MODIFIEZ CETTE LISTE avec vos propres liens YouTube** 👇
+    # Dossier où enregistrer les MP3
+    dossier_de_sortie = "C:/Users/Nico/Music/wonka"
+
+    # Liste des vidéos YouTube à télécharger
     liste_urls = [
-        "https://youtu.be/gi5_PpLwMqU?si=3XmE32iyfHPbTmwh",
-        "https://youtu.be/JXw0FIOftWI?si=XxBAjQs-_MD9IEOY",
-        "https://youtu.be/N32_wTRm-QU?si=b9Y0JqHH6sJiKqoE"
+        "https://youtu.be/gi5_PpLwMqU",
+        "https://youtu.be/JXw0FIOftWI",
+        "https://youtu.be/N32_wTRm-QU",
+        "https://youtu.be/OuXaGE2GWaA",
+        "https://youtu.be/6pCwQnJT-so",
+        "https://youtu.be/d4EJMmpiBZM",
+        "https://youtu.be/RnvEAq_Ue04",
+        "https://youtu.be/31_Y9fijPok",
+        "https://youtu.be/pKrADHw4utk",
+        "https://youtu.be/eptCoIz36F4",
+        "https://youtu.be/jcIRqvjzQSM",
+        "https://youtu.be/UrSjXlCj00o"
     ]
-    
+
     print(f"🚀 Lancement du téléchargement pour {len(liste_urls)} vidéo(s).")
-    
-    # On boucle sur chaque URL de la liste
-    for i, url in enumerate(liste_urls):
+    print(f"📁 Fichiers enregistrés dans : {os.path.abspath(dossier_de_sortie)}")
+
+    for i, url in enumerate(liste_urls, start=1):
         print("\n" + "="*50)
-        print(f"Traitement de la vidéo {i+1}/{len(liste_urls)}")
-        telecharger_youtube_en_mp3(url) # On appelle la fonction pour chaque lien
+        print(f"Traitement de la vidéo {i}/{len(liste_urls)}")
+        telecharger_youtube_en_mp3(url, chemin_sortie=dossier_de_sortie)
 
     print("\n" + "="*50)
     print("🎉 Tous les téléchargements sont terminés !")
