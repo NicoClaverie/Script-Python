@@ -1,3 +1,7 @@
+> ⚠️
+
+> ℹ️
+
 ## Les variables
 
 ### Définition d'une variable
