@@ -19,7 +19,7 @@ Les variables peuvent contenir différents types de données. Voici les principa
 ### Déclaration et nommage d'une variable
 Pour déclarer une variable, on utilise le symbole "=" pour affecter une valeur à un nom de variable, qui est une étiquette pointant vers une zone mémoire.
 
-*A noter que les noms de variables doivent toujours commencer par une lettre ou un underscore "_" et ne pas être un mot réservé.*
+> ⚠️ *A noter que les noms de variables doivent toujours commencer par une lettre ou un underscore "_" et ne pas être un mot réservé.*
 
 Dans python, les mots réservés servent à définir la structure et la syntax du language Python (boucle, définition de fonction, etc.), ces mots clés ne peuvent être repris comme nom de variable.
 
@@ -74,7 +74,7 @@ salaire_str = str(salaire_annuel)  # Conversion en chaîne de caractères
 age_flottant = float(age_int)      # Conversion d'un entier en flottant      
 ```
 
-*Si une conversion est impossible (par exemple, convertir une chaîne qui contient des lettres en entier), Python retournera une erreur.*
+> ⚠️ *Si une conversion est impossible (par exemple, convertir une chaîne qui contient des lettres en entier), Python retournera une erreur.*
 
 
 ## Gérer les entrées/sorties
