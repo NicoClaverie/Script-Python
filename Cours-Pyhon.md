@@ -110,3 +110,24 @@ Ces opérateurs permettent d'effectuer des opérations mathématiques comme par 
 ### Les opérateurs de comparaison
 
 Ces opérateurs permettent de comparer deux valeurs, et le résultat est un booléen (`True` ou `False`). Voici une liste des opérateurs de comparaison avec des exemples :
+
+|Opérateur|Opération|Exemples|Résultat|
+|:-:|:-:|:-:|:-:|
+|<|Inférieur|9 < 4.5|False|
+|<=|Inférieur ou égal|9 <= 4.5|False|
+|>|Supérieur|9 > 4.5|True|
+|>=|Supérieur ou égal|9 >= 4.5|True|
+|==|Egal|9 == 4.5|False|
+|!=|Différent|9 != 4.5|True|
+|is|Identique|9 is 4.5|False|
+|is not|Non identique|9 is not 4.5|True|
+
+### Les opérateurs logiques
+
+Comme pour les opérateurs de comparaison, les opérateurs logiques renvoient un booléen. Tu rencontreras les opérateurs `and`, `or`, et `not`. Le tableau ci-dessous montre quelques exemples :
+
+| Opérateur | Opération | Exemple | Résultat |
+|---|---|---|---|
+| **and** | Vérifie si deux expressions sont **toutes les deux vraies** | `x = 12`<br>`y = -32`<br>`(x > 0) and (y > 0)` | **False**<br>Une seule des deux expressions est vraie |
+| **or** | Vérifie si parmi deux expressions **l'une ou l'autre est vraie** | `x = 12`<br>`y = -32`<br>`(x > 0) or (y > 0)` | **True**<br>Une des deux expressions est vraie |
+| **not** | Inverse le résultat d'une expression | `not (9 <= 4.5)` | **True**<br>L'expression initiale renvoie False, le résultat final est donc True. |
