@@ -1,8 +1,10 @@
 > ⚠️
 
 > ℹ️
+# Cours Python
 
-## Les variables
+
+## 1.1 Les variables
 
 ### Définition d'une variable
 Python utilise des variables pour stocker des données. Une variable représente un espace mémoire nommé dans lequel une valeur est stockée, facilitant ainsi l'accès à cette information en mémoire.##
@@ -90,7 +92,7 @@ nom = input("Quel est ton nom ? ")
 print("Bonjour, " + nom + " !")       
 ```
 
-## Les opérateurs
+## 1.2 Les opérateurs
 
 ### Qu'est ce qu'un opérateur en python ?
 
@@ -135,3 +137,34 @@ Comme pour les opérateurs de comparaison, les opérateurs logiques renvoient un
 | **and** | Vérifie si deux expressions sont **toutes les deux vraies** | `x = 12`<br>`y = -32`<br>`(x > 0) and (y > 0)` | **False**<br>Une seule des deux expressions est vraie |
 | **or** | Vérifie si parmi deux expressions **l'une ou l'autre est vraie** | `x = 12`<br>`y = -32`<br>`(x > 0) or (y > 0)` | **True**<br>Une des deux expressions est vraie |
 | **not** | Inverse le résultat d'une expression | `not (9 <= 4.5)` | **True**<br>L'expression initiale renvoie False, le résultat final est donc True. |
+
+
+## 1.3 Les structures conditionnelles
+
+### L'indentation
+
+En Python, l'indentation consiste à ajouter des espaces ou des tabulations en début de ligne pour structurer le code. Contrairement à de nombreux autres langages, où des symboles comme {} sont utilisés pour délimiter des blocs de code, Python utilise uniquement l'indentation pour indiquer quelles instructions appartiennent à un même bloc.
+
+> ℹ️ La notion de bloc sera expliqué dans la suite de cette quête.
+
+> ⚠️Règles d’indentation en Python
+> - Espace ou tabulation : Il est recommandé d'utiliser 4 espaces pour chaque niveau d'indentation.
+> - Cohérence : Mélanger espaces et tabulations dans le même fichier est déconseillé et peut entraîner des erreurs.
+
+### Les structures conditionnelles
+Dans la vie quotidienne, tu prends souvent des décisions en fonction de certaines informations.
+
+Exemple :  
+```
+Demain s'il fait beau, j'irai à la plage.  
+Sinon je resterai au chaud et je lirai un livre.
+```  
+En programmation, il est possible de représenter ce type de décision avec des structures conditionnelles qui permettent d’appliquer des instructions différentes selon les situations.
+
+```mermaid
+graph TD;
+    A[Expression] --> B[Vrai];
+    A --> C[Faux];
+    B --> D[Instructions];
+    C --> E[Instructions];
+```
