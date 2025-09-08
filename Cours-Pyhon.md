@@ -89,8 +89,59 @@ input() permet de demander une saisie utilisateur. La valeur saisie est retourn�
 nom = input("Quel est ton nom ? ")
 
 # Afficher le nom de l'utilisateur.
-print("Bonjour, " + nom + " !")       
+print("Bonjour, " + nom + " !")
 ```
+1. Chaîne de caractères (string) 📝  
+C'est le cas le plus simple. La fonction `input()` renvoie directement une chaîne de caractères.
+
+```
+# Demander une chaîne de caractères
+nom_utilisateur = input("Entrez votre nom : ")
+print(f"Bonjour, {nom_utilisateur} !")
+```
+
+2. Entier (integer) 🔢  
+Pour obtenir un nombre entier, il faut convertir la sortie de `input()` en utilisant la fonction `int()`.
+```
+# Demander un entier
+try:
+    age = int(input("Quel est votre âge ? "))
+    print(f"Vous aurez {age + 1} ans l'année prochaine.")
+except ValueError:
+    print("Erreur : Veuillez entrer un nombre entier valide.")
+```
+
+3. Flottant (float) 💧  
+Pour un nombre à virgule, le principe est le même, mais on utilise la fonction `float()`.
+```
+# Demander un flottant
+try:
+    prix = float(input("Entrez le prix de l'article (ex: 9.99) : "))
+    prix_ttc = prix * 1.20
+    print(f"Le prix toutes taxes comprises est de {prix_ttc:.2f} €.")
+except ValueError:
+    print("Erreur : Veuillez entrer un nombre valide.")
+```
+
+4. Booléen (boolean) ✅/❌  
+Obtenir un booléen (`True` ou `False`) demande une petite logique supplémentaire, car l'utilisateur ne va pas taper "True" ou "False". L'idée est de vérifier si sa réponse correspond à une valeur affirmative.
+```
+# Demander une réponse et la convertir en booléen
+reponse = input("Aimez-vous Python ? (oui/non) ")
+
+# On convertit la réponse en minuscule pour être flexible
+aime_python = reponse.lower() == "oui"
+
+if aime_python:
+    print("Super ! C'est un excellent langage.")
+else:
+    print("Dommage, peut-être une autre fois !")
+
+# La variable aime_python contient maintenant True ou False
+print(f"Valeur booléenne : {aime_python}")
+```
+
+
 
 ## 1.2 Les opérateurs
 
