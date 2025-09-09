@@ -219,3 +219,46 @@ graph TD;
     B --> D[Instructions];
     C --> E[Instructions];
 ```
+
+
+
+
+
+## Exercice 
+
+
+### Les opérateurs
+
+Sources : https://colab.research.google.com/drive/1ASRk2qIvGkZCmf2YMKyuxrhOuSk4cjje#scrollTo=WjJmN0AxZBLw
+
+#### 1. Calcul d'un prix
+Ecrivez un programme faisant saisir à l’utilisateur un prix unitaire HT, un taux de TVA et un nombre d’articles, et qui calcule le montant TTC de l’achat.
+Affichez le montant TTC.
+```
+prixUnitaireHT = float(input("Prix unitaire HT : "))
+TVA = float(input("Taux de la TVA en % : "))
+NbArticle = int(input("Nombre d'article : "))
+
+prixTtc = prixUnitaireHT/100 * TVA + prixUnitaireHT
+
+NbFinal = NbArticle * prixTtc
+
+print("Prix final :", NbFinal)
+```
+
+#### 2. Conversion de durées (1)
+Ecrivez un programme demandant une durée en secondes à l’utilisateur, et qui la convertit en heures, minutes, secondes.
+Affichez le résultat.
+Par exemple 12334 deviendra 3 heures, 25 minutes et 34 secondes.
+```
+
+```
+
+#### 3. Conversion de durées (2)
+Ecrivez un programme demandant une durée en heures, minutes, secondes à l’utilisateur et qui la convertit en secondes.
+Affichez le résultat.
+Par exemple 3 heures, 25 minutes et 34 secondes deviendra 12334 secondes.
+```
+
+```
+
