@@ -234,17 +234,18 @@ Sources : https://colab.research.google.com/drive/1ASRk2qIvGkZCmf2YMKyuxrhOuSk4c
 #### 1. Calcul d'un prix
 Ecrivez un programme faisant saisir à l’utilisateur un prix unitaire HT, un taux de TVA et un nombre d’articles, et qui calcule le montant TTC de l’achat.
 Affichez le montant TTC.
-```
-prixUnitaireHT = float(input("Prix unitaire HT : "))
-TVA = float(input("Taux de la TVA en % : "))
-NbArticle = int(input("Nombre d'article : "))
-
-prixTtc = prixUnitaireHT/100 * TVA + prixUnitaireHT
-
-NbFinal = NbArticle * prixTtc
-
-print("Prix final :", NbFinal)
-```
+<details>
+<summary>Solution</summary>
+prixUnitaireHT = float(input("Prix unitaire HT : "))  
+TVA = float(input("Taux de la TVA en % : "))  
+NbArticle = int(input("Nombre d'article : "))  
+   
+prixTtc = prixUnitaireHT * (1 + TVA / 100)
+  
+NbFinal = NbArticle * prixTtc  
+  
+print("Prix final :", NbFinal)  
+</details>
 
 #### 2. Conversion de durées (1)
 Ecrivez un programme demandant une durée en secondes à l’utilisateur, et qui la convertit en heures, minutes, secondes.
@@ -261,4 +262,8 @@ Par exemple 3 heures, 25 minutes et 34 secondes deviendra 12334 secondes.
 ```
 
 ```
+<details>
+<summary>Solution</summary>
+    toto
+</details>
 
