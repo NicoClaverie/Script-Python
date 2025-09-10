@@ -237,7 +237,9 @@ Affichez le montant TTC.
 <details>
 <summary>Solution</summary>
 prixUnitaireHT = float(input("Prix unitaire HT : "))  
+    
 TVA = float(input("Taux de la TVA en % : "))  
+
 NbArticle = int(input("Nombre d'article : "))  
    
 prixTtc = prixUnitaireHT * (1 + TVA / 100)
