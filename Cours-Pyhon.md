@@ -190,40 +190,6 @@ Comme pour les opérateurs de comparaison, les opérateurs logiques renvoient un
 | **not** | Inverse le résultat d'une expression | `not (9 <= 4.5)` | **True**<br>L'expression initiale renvoie False, le résultat final est donc True. |
 
 
-## 1.3 Les structures conditionnelles
-
-### L'indentation
-
-En Python, l'indentation consiste à ajouter des espaces ou des tabulations en début de ligne pour structurer le code. Contrairement à de nombreux autres langages, où des symboles comme {} sont utilisés pour délimiter des blocs de code, Python utilise uniquement l'indentation pour indiquer quelles instructions appartiennent à un même bloc.
-
-> ℹ️ La notion de bloc sera expliqué dans la suite de cette quête.
-
-> ⚠️Règles d’indentation en Python
-> - Espace ou tabulation : Il est recommandé d'utiliser 4 espaces pour chaque niveau d'indentation.
-> - Cohérence : Mélanger espaces et tabulations dans le même fichier est déconseillé et peut entraîner des erreurs.
-
-### Les structures conditionnelles
-Dans la vie quotidienne, tu prends souvent des décisions en fonction de certaines informations.
-
-Exemple :  
-```
-Demain s'il fait beau, j'irai à la plage.  
-Sinon je resterai au chaud et je lirai un livre.
-```  
-En programmation, il est possible de représenter ce type de décision avec des structures conditionnelles qui permettent d’appliquer des instructions différentes selon les situations.
-
-```mermaid
-graph TD;
-    A[Expression] --> B[Vrai];
-    A --> C[Faux];
-    B --> D[Instructions];
-    C --> E[Instructions];
-```
-
-
-
-
-
 ## Exercice 
 
 
@@ -292,3 +258,84 @@ dureeTotale = heureEnSeconde + minuteEnSeconde + Seconde
 print(f"{Heure} heures, {Minute} minutes et {Seconde} secondes font {dureeTotale} secondes")
 </details>
 
+
+
+## 1.3 Les structures conditionnelles
+
+### L'indentation
+
+En Python, l'indentation consiste à ajouter des espaces ou des tabulations en début de ligne pour structurer le code. Contrairement à de nombreux autres langages, où des symboles comme {} sont utilisés pour délimiter des blocs de code, Python utilise uniquement l'indentation pour indiquer quelles instructions appartiennent à un même bloc.
+
+> ℹ️ La notion de bloc sera expliqué dans la suite de cette quête.
+
+> ⚠️Règles d’indentation en Python
+> - Espace ou tabulation : Il est recommandé d'utiliser 4 espaces pour chaque niveau d'indentation.
+> - Cohérence : Mélanger espaces et tabulations dans le même fichier est déconseillé et peut entraîner des erreurs.
+
+### Les structures conditionnelles
+Dans la vie quotidienne, tu prends souvent des décisions en fonction de certaines informations.
+
+Exemple :  
+```
+Demain s'il fait beau, j'irai à la plage.  
+Sinon je resterai au chaud et je lirai un livre.
+```  
+En programmation, il est possible de représenter ce type de décision avec des structures conditionnelles qui permettent d’appliquer des instructions différentes selon les situations.
+
+```mermaid
+graph TD;
+    A[Expression] --> B[Vrai];
+    A --> C[Faux];
+    B --> D[Instructions];
+    C --> E[Instructions];
+```
+
+Dans le code, pour définir une structure conditionnelle, on utilise des opérateurs qui évaluent une expression. En fonction du résultat, Python exécute un bloc d’instructions associé à cette condition.
+
+Exemple : si tu souhaites retirer 100 € de ton compte et que tu as déjà atteint ton découvert autorisé, le distributeur affichera "Solde insuffisant" et ne délivrera pas d’argent. Sinon, il délivrera la somme demandée. Voici ce cas représenté en pseudo-code :
+```
+si solde_suffisant:
+    Retirer(somme_demandée)
+    Afficher("Transaction réussie")
+sinon:
+    Afficher("Solde insuffisant")
+```
+> ℹ️ Le pseudo-code permet de formuler un algorithme ou un problème en un langage proche du français, avant de l’écrire en code Python.
+
+Dans cet exemple, les mots-clés "si" et "sinon" permettent de définir deux scénarios distincts. En Python, tu trouveras trois types de structures conditionnelles :
+
+- if ("si”)
+- if … else (“si … sinon”)
+- if … elif … else (“si … sinon si … sinon”)
+
+#### La structure conditionnelle `if`
+
+Le `if` s’utilise pour exécuter un bloc de code uniquement si une condition est vraie. Si la condition est fausse, le bloc est ignoré.
+```
+x = 10
+
+if x > 12:                                # condition (retourne un booléen, True ou False)
+  print("La condition est remplie")
+else:                                     # ici j'indique quoi faire si la condition n'est pas remplie
+  print("La condition n'est pas remplie")
+
+# la condition n'est pas remplie (False), c'est la seconde instruction print() qui est exécutée
+```
+> ℹ️ N'oublie pas le `:` après la condition du `if` et après le `else`.
+
+#### La structure conditionnelle `if` ... `elif` ... `else`
+
+Si plus de deux cas doivent être gérés, imbriquer `if` et `else` peut rendre le code difficile à lire. Utilise plutôt `if` … `elif` … `else`.
+
+```
+x = 12
+
+if x > 12:                                # 1er condition
+  print("La condition 1 est remplie")
+elif x == 12:                             # 2e condition
+  print("La condition 2 est remplie")     
+else:                                     # Si aucune des 2 conditions n'est remplie on indique quoi faire
+  print("Aucune des 2 conditions n'est remplie")
+
+# la condition 2 est remplie, c'est la 2e instruction print() qui est exécutée
+```
