@@ -274,11 +274,21 @@ print(f"{dureeSecondeTotal} secondes fait {dureeHeure} Heures, {dureeMinute} Min
 Ecrivez un programme demandant une durée en heures, minutes, secondes à l’utilisateur et qui la convertit en secondes.
 Affichez le résultat.
 Par exemple 3 heures, 25 minutes et 34 secondes deviendra 12334 secondes.
-```
-
-```
 <details>
-<summary>Solution</summary>
-    toto
+<summary>Solution</summary>  
+    
+Heure = int(input("Nombre d'heures : "))
+
+Minute = int(input("Nombre de minutes : "))
+
+Seconde = int(input("Nombre de secondes : "))
+
+heureEnSeconde = Heure * 3600
+
+minuteEnSeconde = Minute * 60
+
+dureeTotale = heureEnSeconde + minuteEnSeconde + Seconde
+
+print(f"{Heure} heures, {Minute} minutes et {Seconde} secondes font {dureeTotale} secondes")
 </details>
 
