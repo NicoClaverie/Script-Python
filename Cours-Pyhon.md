@@ -327,6 +327,8 @@ else:                                     # ici j'indique quoi faire si la condi
 
 Si plus de deux cas doivent être gérés, imbriquer `if` et `else` peut rendre le code difficile à lire. Utilise plutôt `if` … `elif` … `else`.
 
+> ℹ️ Il est possible d'ajouter plusieurs `elif` entre le `if` et le `else` pour prendre en compte beaucoup de cas possibles.
+
 ```
 x = 12
 
@@ -339,3 +341,95 @@ else:                                     # Si aucune des 2 conditions n'est rem
 
 # la condition 2 est remplie, c'est la 2e instruction print() qui est exécutée
 ```
+
+#### Quiz 
+
+1. Quel est le résultat affiché par le code ci-dessous ?
+```
+if (5 > 10):
+print("Tomato")
+elif (8 != 9):
+print("Banana")
+else:
+print("Apple")
+```
+- Banana
+- Tomato
+- Apple
+
+<details>
+<summary>Solution</summary> 
+Banana
+</details>
+
+
+2. Quel est le résultat affiché par le code ci-dessous ?
+```
+name = "marie"
+if name == "mary":
+    print("Ireland")
+elif name == "maria":
+    print("Colombia")
+else:
+    print("France")
+```
+- Colombia
+- Ireland
+- France
+
+<details>
+<summary>Solution</summary> 
+France
+</details>
+
+3. Quel est le résultat affiché par le code ci-dessous ?
+```
+Age = 21
+if (Age < 12):
+    print("Kid")
+elif (Age >= 12) and (Age < 21):
+    print("Teenager")
+else:
+    print("Adult")
+```
+
+- Kid
+- Adult
+- Teenager
+
+<details>
+<summary>Solution</summary> 
+Adult
+</details>
+
+4. Quel est le résultat affiché par le code ci-dessous ?
+
+```
+Age = 12
+if not (Age != 12):
+    print("Kid")
+else:
+    print("Other")
+```
+- Kid
+- Other
+
+<details>
+<summary>Solution</summary> 
+Kid
+</details>
+
+## Exercice 
+
+
+### Les structures conditionnelle
+
+Source : https://colab.research.google.com/drive/1gKL8b7j8-vyWbFwmwCEHyltlhTep486j
+
+1. Calcul du montant d'une remise
+
+Un commerçant accorde une remise de 5 % pour tout achat d’un montant compris entre 100 et 500 € et 8 % au-delà.
+Ecrivez un programme de calcul du montant de la remise sur un achat donné.
+Affichez le montant de la remise.
+
+
