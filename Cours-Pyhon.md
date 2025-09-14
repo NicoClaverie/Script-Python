@@ -453,7 +453,15 @@ Ecrivez un programme faisant saisir trois entiers x, y, z à l’utilisateur, et
 
 <details>
 <summary>Solution</summary> 
-toto
+x = int(input("Entrer le premier nombre entier x = ? :"))  
+y = int(input("Entrer le second nombre entier y = ? :"))  
+z = int(input("Entrer le troisième nombre entier z = ? :"))  
+
+if (x < y) and (y < z):
+    print(f"{x}, {y}, {z} sont dans l'ordre croissant")
+
+else:
+    print(f"{x}, {y}, {z} ne sont pas dans l'ordre croissant")
 </details>
 
 3. Tri de trois réels
