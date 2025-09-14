@@ -523,7 +523,203 @@ Ecrivez un programme qui affiche le signe du produit de deux nombres réels sans
 
 ---
 
-# Boucles et alternatives en Python
+## 1.4 Loops
+
+### Introduction
+
+En programmation, les boucles sont essentielles. Aussi, elles existent pour la plupart des langages de programmation, pas seulement Python.
+C'est donc un concept avec lequel vous avez intérêt à vous familiariser.
+
+Tout d'abord, "à quoi peut bien servir une boucle ?"
+Honnêtement, à plein de choses bien différentes. Mais ça, tu t'en rendras compte en pratiquant. Petit à petit, tu seras capable d'entremêler plusieurs concepts de base vues pendant la formation, pour les mettre en application face à de vraies problématiques, qu'elles soient professionnelles ou même personnelles !!!
+
+On pourrait par exemple utiliser les boucles pour créer un jeu de quiz, trier des données...
+
+Dans le cas de création de jeu de quiz, on pourrait utiliser les boucles pour que notre programme passe d'une première question à la suivante, une fois que l'utilisateur a répondu à la première question.
+Les boucles peuvent être utilisées pour répéter un processus plusieurs fois.
+Une fois que l'on maîtrise ce concept, on peut aisément être créatif grâce aux boucles, automatiser des tâches...
+
+Pour le moment, concentrons-nous sur une introduction, dans le but de comprendre une boucle basique.
+
+*"Comment fonctionne une boucle ? Qu'est ce que cela produit comme résultat ?"*
+
+Prenons un exemple:
+
+```
+for i in "tutti quanti":
+  print(i)
+-> t
+-> u
+-> t
+-> t
+-> i
+-> 
+-> q
+-> u
+-> a
+-> n
+-> t
+-> i
+```
+
+Comme on peut le voir ci-dessus, on affiche chaque lettre de "tutti quanti" tour à tour.
+Tour à tour, car c'est exactement ce qu'a fait le code : plusieurs tours. D'où le nom "boucle".
+À chaque tour, une nouvelle lettre s'affiche. Et ça tombe bien, car c'est exactement ce qu'on a demandé à notre code.
+
+- `"for i in "tutti quanti":"`  --> Pour chaque caractère dans `"tutti quanti"`
+- `print(i)` --> Affiche la valeur de ce caractère  
+  
+Dans le code ci-dessus, i qui fait office de variable temporaire pour notre boucle, fait référence à chaque élément que le code va rencontrer à chaque tour.
+Une fois que tous les caractères de "tutti quanti" ont été rencontrés, et bien il n'y a plus aucune raison de faire des tours, donc la boucle s'arrête, et on peut observer le résultat du code.
+
+### Exercice
+
+#### Loop
+Source : https://colab.research.google.com/drive/1gGCa-52Qvm-Birl5zqE6ZH6FEQCM8eDW?usp=sharing
+
+1.1 - Fais une boucle qui renvoie les valeurs de 0 à 9.  
+`indice`: Utilises la fonction range()
+<details>
+<summary>Solution</summary> 
+for i in range(10):  
+  print (i)
+</details>
+
+1.2 - Fais une boucle qui renvoie les valeurs de 1 à 20.
+<details>
+<summary>Solution</summary> 
+for i in range(1, 21):  
+  print (i)
+</details>
+
+1.3 - Fais une boucle qui renvoie les nombres pairs entre 2 et 20 inclus.
+<details>
+<summary>Solution</summary> 
+for i in range(2, 21, 2):
+    print(i)
+
+ou
+
+for i in range(1, 21):
+    if i % 2 == 0:
+        print(i)
+</details>
+
+1.4 - Fais une boucle qui renvoie les valeurs de 10 à 1, donc dans l'ordre décroissant.
+
+<details>
+<summary>Solution</summary> 
+for i in range(10, 0, -1):
+    print(i)
+</details>
+
+1.5 - Fais une boucle qui affiche 5 fois "Bonjour":
+
+<details>
+<summary>Solution</summary> 
+for i in range(5):
+    print("Bonjour")
+</details>
+
+1.6 - Fais une boucle qui affiche "Bonjour", puis "aurevoir" 5 fois, comme dans l'exemple ci-dessous.
+
+```
+Bonjour
+Au revoir
+Bonjour
+Au revoir
+Bonjour
+Au revoir
+Bonjour
+Au revoir
+Bonjour
+Au revoir
+```
+
+<details>
+<summary>Solution</summary> 
+for i in range(5):
+    print("Bonjour")
+    print("Au revoir")
+</details>
+
+1.7 - Fais une boucle qui affiche chaque lettre du mot "Blanquette", comme ceci:
+
+<details>
+<summary>Solution</summary> 
+for i in "Blanquette":
+    print(i)
+</details>
+
+1.8 - Fais une boucle qui affiche en sortie, à chaque ligne, le numéro du tour de la boucle, comme ci-dessous.
+
+```
+C'est le tour numéro 1
+C'est le tour numéro 2
+C'est le tour numéro 3
+C'est le tour numéro 4
+C'est le tour numéro 5
+C'est le tour numéro 6
+C'est le tour numéro 7
+C'est le tour numéro 8
+C'est le tour numéro 9
+```
+
+<details>
+<summary>Solution</summary> 
+for i in range(1, 10):
+    print(f"C'est le tour numéro {i}")
+</details>
+
+#### Loop sur les éléments d'une `list`
+2.1 - Fais une boucle qui affiche chacun des éléments de la list ci-dessous.
+`cartoon = ['Babar', "Pingu", "oui-oui"]`
+
+<details>
+<summary>Solution</summary> 
+cartoon = ['Babar', "Pingu", "oui-oui"]
+for i in cartoon:
+    print(i)
+</details>
+
+2.2 - Fais une boucle qui n'affiche que les éléments de la liste ci-dessous qui commencent par la lettre "B".
+`names = ["Ivan", "Geoffrey", "Benjamin", "Berthe", "Coline", "Achraf", "Géraldine", "Camille", "Benoît"]`
+
+<details>
+<summary>Solution</summary> 
+names = ["Ivan", "Geoffrey", "Benjamin", "Berthe", "Coline", "Achraf", "Géraldine", "Camille", "Benoît"]
+for i in names:
+    if i[0] == "B":
+        print(i)
+</details>
+
+2.3 - Fais une boucle qui n'affiche que les éléments de la liste ci-dessous qui sont supérieurs à 5.
+`number = [0, -3, 10, 6, 4, 5, -23, 12, 32]`
+<details>
+<summary>Solution</summary> 
+number = [0, -3, 10, 6, 4, 5, -23, 12, 32]
+for i in number:
+    if i > 5:
+        print(i)
+</details>
+
+2.4 - Fais une boucle qui n'affiches que les éléments de la liste ci-dessous qui sont supérieurs à 25 et inférieurs à 50 lorsqu'on les élève au carré:
+`number = [0, -3, 10, 6, 4, 5, -23, 12, 32, 7]`
+
+<details>
+<summary>Solution</summary> 
+```
+number = [0, -3, 10, 6, 4, 5, -23, 12, 32, 7]
+for i in number: 
+    if i**2 > 25 and i**2 < 50:
+        print(i)
+```
+</details>
+
+
+
+
+### Boucles et alternatives en Python
 
 | Type | Exemple | Résultat / Utilité |
 |------|---------|---------------------|
@@ -544,7 +740,7 @@ Ecrivez un programme qui affiche le signe du produit de deux nombres réels sans
 
 ---
 
-## Alternatives fonctionnelles aux boucles
+### Alternatives fonctionnelles aux boucles
 
 | Fonction | Exemple | Résultat / Utilité |
 |----------|---------|---------------------|
@@ -554,8 +750,9 @@ Ecrivez un programme qui affiche le signe du produit de deux nombres réels sans
 | **any** | `any(x>3 for x in [1,2,3,4])` | Vérifie si **au moins un** élément satisfait → `True` |
 | **all** | `all(x<5 for x in [1,2,3,4])` | Vérifie si **tous** satisfont → `True` |
 
+---
 
-# Carte mentale des boucles et alternatives en Python
+### Carte mentale des boucles et alternatives en Python
 ```
 Boucles
 ├── For
@@ -607,3 +804,76 @@ Alternatives fonctionnelles
 └── all()
     └── Vérifie si tous les éléments sont vrais
 ```
+
+## Boucle conditionnelle `while` (tant que)
+La boucle `while` permet de réaliser une suite d’instructions tant qu’une certaine condition est vraie.
+```
+while condition:
+    instruction_1
+    instruction_2
+    ...
+    instruction_n
+# Fin de la boucle (la fin du bloc est délimitée par l'indentation)"
+# Les instructions suivantes sont exécutées normalement
+```
+Le mécanisme de la boucle `while` commence par évaluer la condition. Deux cas sont possibles :
+
+> Si la condition est satisfaite, on exécute toutes les instructions du bloc indenté, ensuite on retourne au début de la boucle et on réévalue la condition initiale.
+> Sinon, on passe aux instructions situées après la boucle.
+Voyons cela avec un exemple
+```
+number = 0
+while number < 10 :
+    number += 1 # Cette notation est équivalente à number = number + 1
+    print(number)
+print('fini !') 
+```
+
+Le code ci-dessus affiche tous les nombres entre 1 et 10, puis affiche 'fini !'. En effet :
+
+- À la ligne 2, tant que `number < 10`, on exécute les lignes 3 et 4 puis on retourne à la ligne 2. Au moment où la ligne 4 est exécutée pour la première fois, number vaut 1.
+- Après plusieurs passages dans la boucle, la ligne 3 va finir par rendre `number` égal à 10, puis l'affiche.
+- On remonte alors une dernière fois à la ligne 2 mais la condition `number < 10` n’est plus vraie ! On saute donc directement à la ligne 5 (après la boucle).
+
+Si le fonctionnement de la boucle while est suffisamment clair, essaie de répondre à ce quiz.
+```
+number = 1
+while number <= 10:
+    print(number, 'x 6 =', number * 6)
+    number += 1 
+```
+1 - Qu’affiche le code ci dessus ?
+- `Table des multiplications de 6 par respectivement 1 jusqu’à 10`
+- `Table de multiplication de 6 pour les nombres de 1 à 10`
+- `Le résultat de la multiplication de 6 par 1`
+- `Table de multiplication de 6 par les nombres de 1 à 11`
+- `Table des multiplications de 6 par respectivement 1 jusqu’à 11`
+
+<details>
+<summary>Solution</summary> 
+> Table des multiplications de 6 par respectivement 1 jusqu’à 10
+> Table de multiplication de 6 pour les nombres de 1 à 10
+</details>
+
+> ⚠️ Pièges à éviter : boucle jamais exécutée
+> Il se peut très bien qu’à la première évaluation de la condition, celle-ci soit évaluée à `False`. Dans ce cas, on n’effectue jamais le corps de la boucle. Par exemple:
+```
+number = -1
+while number >= 0:
+    print("rien ne s'affiche...")
+```
+> ⚠️ Attention aux boucles infinies !
+> Attention, si la condition ne devient jamais égale à `False`, le bloc de code va boucler sans fin. Si cela vous arrive, cherche « comment interrompre un script Python » sur Google, car ça dépend de l'endroit où on le fait tourner. Par exemple:
+```
+while True:
+    print('ce texte sera affiché encore et encore !')
+```
+ou encore :
+```
+number = 0
+while number < 10:
+    print('ce texte sera affiché encore et encore !')
+```
+
+## Boucle itérative `for` (« pour tout... »)
+
