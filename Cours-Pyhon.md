@@ -432,4 +432,43 @@ Un commerçant accorde une remise de 5 % pour tout achat d’un montant compris 
 Ecrivez un programme de calcul du montant de la remise sur un achat donné.
 Affichez le montant de la remise.
 
+<details>
+<summary>Solution</summary> 
+prix = float(input("Quel est le prix en € : "))
 
+if ((prix >= 100) and (prix < 500)):
+    remise = prix/100 * 5
+
+elif (prix >=500):
+    remise = prix/100 * 8 
+
+elif (prix < 100):
+    remise = "Achat inférieur a 100 €, aucune remise possible"
+    
+print(f"La remise est de : {remise}")
+</details>
+
+2. Savoir si trois entiers sont triés
+Ecrivez un programme faisant saisir trois entiers x, y, z à l’utilisateur, et lui indiquer si ces nombres sont dans l’ordre croissant (x <= y <= z).
+
+<details>
+<summary>Solution</summary> 
+toto
+</details>
+
+3. Tri de trois réels
+Ecrivez un programme faisant saisir trois nombres réels x, y, z à l’utilisateur et qui les trie par ordre croissant (à la fin du déroulement du programme x ≤ y ≤ z).
+Affichez x, y et z.
+
+<details>
+<summary>Solution</summary> 
+toto
+</details>
+
+4. Signe d'un produit
+Ecrivez un programme qui affiche le signe du produit de deux nombres réels sans calculer la valeur de ce produit. Par signe, on entend positif, négatif ou nul.
+
+<details>
+<summary>Solution</summary> 
+toto
+</details>
