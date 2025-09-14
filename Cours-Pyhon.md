@@ -465,6 +465,7 @@ else:
 </details>
 
 3. Tri de trois réels
+
 Ecrivez un programme faisant saisir trois nombres réels x, y, z à l’utilisateur et qui les trie par ordre croissant (à la fin du déroulement du programme x ≤ y ≤ z).
 Affichez x, y et z.
 ```
@@ -496,9 +497,113 @@ elif y <= z <= x:
 </details>
 
 4. Signe d'un produit
+
 Ecrivez un programme qui affiche le signe du produit de deux nombres réels sans calculer la valeur de ce produit. Par signe, on entend positif, négatif ou nul.
 
 <details>
 <summary>Solution</summary> 
-toto
+ premier = int(input("Entrer le premier nombre entier :"))
+    
+ second = int(input("Entrer le second nombre entier :"))
+ 
+ produit = premier * second
+
+ if produit < 0:
+ 
+    print("Le produit est négatif")
+
+ if produit > 0:
+
+    print("Le produit est positif")
+
+ if produit == 0:
+
+    print("Le produit est nul")
 </details>
+
+---
+
+# Boucles et alternatives en Python
+
+| Type | Exemple | Résultat / Utilité |
+|------|---------|---------------------|
+| **for + range** | `for i in range(5): print(i)` | Affiche `0 1 2 3 4` |
+| **for sur liste** | `for fruit in ["pomme","banane"]: print(fruit)` | Parcourt une liste d’éléments |
+| **for sur chaîne** | `for c in "Python": print(c)` | Parcourt chaque caractère |
+| **for sur dict** | `for k,v in {"a":1,"b":2}.items(): print(k,v)` | Parcourt clés et valeurs |
+| **while** | `while x < 5: print(x); x+=1` | Répète tant que condition vraie |
+| **break** | `for i in range(5): if i==3: break` | Sort de la boucle immédiatement |
+| **continue** | `for i in range(5): if i==2: continue; print(i)` | Ignore l’itération en cours |
+| **else avec for/while** | `for i in range(3): print(i) else: print("fin")` | S’exécute si pas de `break` |
+| **boucles imbriquées** | `for i in range(2): for j in range(3): print(i,j)` | Boucles dans des boucles |
+| **enumerate** | `for i,v in enumerate(["a","b"]): print(i,v)` | Indice + valeur d’une liste |
+| **zip** | `for x,y in zip([1,2],[3,4]): print(x,y)` | Parcourt deux listes en parallèle |
+| **list comprehension** | `[i*i for i in range(5)]` | Crée `[0,1,4,9,16]` |
+| **set comprehension** | `{i for i in range(5) if i%2==0}` | Crée `{0,2,4}` |
+| **dict comprehension** | `{i:i*i for i in range(3)}` | Crée `{0:0,1:1,2:4}` |
+
+---
+
+## Alternatives fonctionnelles aux boucles
+
+| Fonction | Exemple | Résultat / Utilité |
+|----------|---------|---------------------|
+| **map** | `list(map(lambda x: x*2, [1,2,3]))` | Applique une fonction → `[2,4,6]` |
+| **filter** | `list(filter(lambda x: x%2==0, [1,2,3,4]))` | Filtre selon condition → `[2,4]` |
+| **reduce** *(dans `functools`)* | `from functools import reduce; reduce(lambda a,b: a+b, [1,2,3,4])` | Réduit une liste → `10` |
+| **any** | `any(x>3 for x in [1,2,3,4])` | Vérifie si **au moins un** élément satisfait → `True` |
+| **all** | `all(x<5 for x in [1,2,3,4])` | Vérifie si **tous** satisfont → `True` |
+
+
+# Carte mentale des boucles et alternatives en Python
+```
+Boucles
+├── For
+│   ├── range()
+│   │   └── `for i in range(5): ...`
+│   ├── liste / tuple
+│   │   └── `for x in [1,2,3]: ...`
+│   ├── chaîne
+│   │   └── `for c in "Python": ...`
+│   ├── dictionnaire
+│   │   └── `for k,v in d.items(): ...`
+│   ├── enumerate()
+│   │   └── `for i,v in enumerate(liste): ...`
+│   └── zip()
+│       └── `for x,y in zip(l1,l2): ...`
+│
+├── While
+│   └── `while condition: ...`
+│
+├── Contrôle de boucle
+│   ├── break
+│   │   └── Sort de la boucle
+│   ├── continue
+│   │   └── Passe à l’itération suivante
+│   └── else
+│       └── Exécuté si la boucle termine sans `break`
+│
+├── Boucles imbriquées
+│   └── `for i in ...: for j in ...: ...`
+│
+└── Compréhensions
+    ├── Liste
+    │   └── `[x*x for x in range(5)]`
+    ├── Set
+    │   └── `{x for x in range(5) if x%2==0}`
+    └── Dict
+        └── `{x: x*x for x in range(5)}`
+```     
+```
+Alternatives fonctionnelles
+├── map()
+│   └── `map(lambda x: f(x), iterable)`
+├── filter()
+│   └── `filter(lambda x: condition, iterable)`
+├── reduce() (functools)
+│   └── `reduce(lambda a,b: a+b, iterable)`
+├── any()
+│   └── Vérifie si au moins un élément est vrai
+└── all()
+    └── Vérifie si tous les éléments sont vrais
+```
