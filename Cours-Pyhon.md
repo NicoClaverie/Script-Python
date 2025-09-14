@@ -467,10 +467,32 @@ else:
 3. Tri de trois réels
 Ecrivez un programme faisant saisir trois nombres réels x, y, z à l’utilisateur et qui les trie par ordre croissant (à la fin du déroulement du programme x ≤ y ≤ z).
 Affichez x, y et z.
-
+```
 <details>
 <summary>Solution</summary> 
-toto
+
+x = int(input("Entrer le premier nombre entier x = ? :"))
+y = int(input("Entrer le second nombre entier y = ? :"))
+z = int(input("Entrer le troisième nombre entier z = ? :"))
+
+if x <= y <= z:
+    print (f"L'ordre croissant est : {x}, {y} et {z}")
+
+elif x <= z <= y:
+    print (f"L'ordre croissant est : {x}, {z} et {y}")    
+    
+elif z <= y <= x:
+    print (f"L'ordre croissant est : {z}, {y} et {x}")
+
+elif z <= x <= y:
+    print (f"L'ordre croissant est : {z}, {x} et {y}")  
+    
+elif y <= x <= z:
+    print (f"L'ordre croissant est : {y}, {x} et {z}")  
+
+elif y <= z <= x:
+    print (f"L'ordre croissant est : {y}, {z} et {x}")
+```
 </details>
 
 4. Signe d'un produit
