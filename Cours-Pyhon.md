@@ -855,14 +855,14 @@ while number <= 10:
 > Table de multiplication de 6 pour les nombres de 1 à 10
 </details>
 
-> ⚠️ Pièges à éviter : boucle jamais exécutée
+> ⚠️ Pièges à éviter : boucle jamais exécutée  
 > Il se peut très bien qu’à la première évaluation de la condition, celle-ci soit évaluée à `False`. Dans ce cas, on n’effectue jamais le corps de la boucle. Par exemple:
 ```
 number = -1
 while number >= 0:
     print("rien ne s'affiche...")
 ```
-> ⚠️ Attention aux boucles infinies !
+> ⚠️ Attention aux boucles infinies !  
 > Attention, si la condition ne devient jamais égale à `False`, le bloc de code va boucler sans fin. Si cela vous arrive, cherche « comment interrompre un script Python » sur Google, car ça dépend de l'endroit où on le fait tourner. Par exemple:
 ```
 while True:
@@ -877,3 +877,147 @@ while number < 10:
 
 ## Boucle itérative `for` (« pour tout... »)
 
+En informatique, il arrive qu’on ait besoin d’effectuer les mêmes calculs avec une variable parcourant l’ensemble des entiers entre deux bornes (i.e. tous les entiers entre 0 et 100).  
+C’est vrai qu’on pourrait utiliser une boucle `while`. Cependant, ce cas de figure est tellement fréquent qu’il existe un raccourci : la boucle itérative `for`.  
+
+Prenons l'exemple où on souhaite afficher tous les entiers entre 0 et 100. En utilisant la boucle `while`, on aurait :
+```
+number = 0
+while number < 101: 
+    print(number)
+    number += 1
+```
+Une autre manière d'écrire ce code est l'utilisation des boucles for
+```
+for number in range(0,101):
+    print(number)
+```
+Ne t'inquiètes pas, on verra dans la suite la manière d'utiliser la fonction `range`.
+
+En Python la structure de la boucle `for` est la suivante :
+```
+for element in iterable:
+    instruction 1
+    instruction 2
+    ...
+    instruction N
+# fin de la boucle itérative
+# les instructions suivantes sont effectuées normalement
+```
+
+Un itérable est une structure qui fournit une séquence de valeurs. La syntaxe `for element in iterable` signifie que la variable `element` doit prendre successivement toutes les valeurs que fournit l’itérable. Ainsi, pour chacune de ces valeurs, on exécute les instructions du corps de la boucle.
+
+Un itérable qu’on utilisera assez souvent est fourni par la fonction `range` (intervalle) qui crée une suite finie d’entiers. Voyons la syntaxe de ce range !  
+En considérant les paramètres : `start` (début), `end` (fin) et `step` (pas) de type entier, on peut appeler la fonction range de plusieurs manières différentes :  
+
+- Pour `end > 0`, `range(fin)` fournit tous les entiers entre 0 inclus et `end` exclue. Par exemple, range(3) permet de parcourir les valeurs 0, 1 et 2.
+
+- On peut décider de commencer à un autre entier que 0 en précisant un autre paramètre : pour `start` < `end`, `range(start, end)` fournit tous les entiers de `start` inclus à `end` exclue. Par exemple, range(1, 3) permet de parcourir les valeurs 1 et 2.
+
+- On peut aussi faire varier le pas : `range(start, end, step)`. Par exemple, `range(1, 5, 2)` permet de parcourir les valeurs 1 et 3. Ou encore spécifier un pas négatif : range(5, 2, -2) permet de parcourir les valeurs 5 et 3.
+
+Voyons si tout cela a été clair :
+```
+for number in range(4,-1,-2) :
+    print(number)
+```
+1 - Qu’affiche le code ci dessus :
+- 4, 2
+- 4, 2, 0
+- 4, 2, -1
+  
+<details>
+<summary>Solution</summary> 
+4, 2, 0
+</details>
+
+En dehors des itérables `range`, il existe d’autres structures de données sur lesquelles on peut itérer, telles que les listes, les chaînes de caractères, les tuples…  
+Vous allez voir ces structures avec plus de détails dans les prochaines quêtes.
+
+
+## `Break` et `Continue`
+Dans une boucle (`while` ou `for`), l’instruction `break` interrompt la boucle instantanément : on sort de la boucle et on poursuit l’exécution du code situé après la boucle courante.
+
+Tandis que l’instruction `continue` interrompt l’itération courante de la boucle, et passe directement à l’itération suivante, depuis le début de la boucle (pour une boucle `while`, on réévalue la condition, et pour une boucle `for` on passe à l'élément suivant)
+```
+for number in range(5):
+ if number == 3:
+  break
+ print(number)
+```
+Ce programme affiche les nombres 0, 1 et 2. En effet, une fois que `number` est égal à 3 on sort de la boucle.
+
+En changeant le `break` par le `continue`:
+```
+for number in range(5):
+ if number == 3:
+  continue
+ print(number)
+```
+
+Dans ce cas, le code affiche tous les nombres de 0 à 4 à l'exception de 3 (on reste dans la boucle !)
+
+On peut aussi utiliser le `break` et le `continue` dans des boucles imbriquées. Dans ce cas, c’est uniquement la boucle la plus proche contenant le `break` ou le `continue` qui est concernée.
+
+Considérons l'exemple ci-dessous :
+```
+nombre = 0
+while nombre < 15 : 
+  print(nombre)
+  nombre += 1
+  if nombre == 5 : 
+    break
+  continue
+  print(1 / 0)
+print('fini')
+```
+
+Dans ce cas, on n'affiche que les nombres de 0 à 4. Lorqu'on atteint le nombre 5, on sort de la boucle grâce au `break`. D'un autre côté, tu peux remarquer qu'à la ligne 8 le `print` de `1 / 0` devrait induire une erreur de division par zéro (essaie de commenter la ligne 6 et tu verras !). Cependant, l'exécution de cette ligne est évitée grâce à l'instruction `continue`. Enfin, une fois qu'on est sortis de la boucle, on affiche 'fini'.
+
+
+### Les boucles imbriquées
+Il est tout à fait possible d’imbriquer des boucles ou des instructions conditionnelles. Dans ce cas, le niveau d’indentation de chaque ligne permet à Python de savoir dans quel boucle on effectue le traitement.
+
+Considérons l'exemple ci-dessous :
+```
+for i in range(1, 6):
+  for j in range(1, i+1):
+    print(j, end='')
+  print()
+```
+Ce programme affiche une pyramide de nombres
+```
+1
+1 2
+1 2 3
+1 2 3 4
+1 2 3 4 5
+```
+
+La boucle intérieure (faisant varier le `j`) permet d'afficher à chaque itération les nombres de 1 à `i`. Le fait d'utiliser un `end = ' '` permet pour chaque itération d'afficher ces nombres sur une même ligne séparés par une espace.
+
+### Ressources
+```
+Les boucles while et for sur Python : à partir de 5min55
+https://youtu.be/x_Jeyvw7n9I
+```
+```
+Boucles imbriquées
+https://youtu.be/94UHCEmprCY
+```
+
+### Exercice
+
+Tu veux devenir expert dans la manipulation des boucles Python ? Passons à la pratique !
+
+Dans ce challenge, tu vas t'exercer à utiliser diverses boucles `for` et `while`. Essaie de choisir le type de boucle le plus adéquat de telle sorte à simplifier ton code.
+
+Source : https://colab.research.google.com/drive/1QR2ZmMc0TMFN8HUYpMVa7lB_Ec-xEenV
+
+#### Mission 1 :  
+Écrire un programme permettant de calculer la somme des entiers entre 0 et 1000 (tous deux inclus) qui sont divisibles par 2 ou par 5, mais pas par 10.
+
+#### Mission 2 :  
+Écrire un programme qui permet de compter le nombre total de chiffres dans un nombre.
+
+Par exemple le nombre de chiffres pour le nombre 987354 est 6.
