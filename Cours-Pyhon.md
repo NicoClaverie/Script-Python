@@ -1015,9 +1015,74 @@ Dans ce challenge, tu vas t'exercer à utiliser diverses boucles `for` et `while
 Source : https://colab.research.google.com/drive/1QR2ZmMc0TMFN8HUYpMVa7lB_Ec-xEenV
 
 #### Mission 1 :  
-Écrire un programme permettant de calculer la somme des entiers entre 0 et 1000 (tous deux inclus) qui sont divisibles par 2 ou par 5, mais pas par 10.
+Écrire un programme permettant de calculer la somme des entiers entre 0 et 1000 (tous deux inclus) qui sont divisibles par 2 ou par 5, mais pas par 10. (Le resultat est 250000)
+
+<details>
+<summary>Solution</summary> 
+total = int(0)
+for i in range(1001):
+    if (i % 2 == 0 or i % 5 == 0) and i % 10 !=0:
+        total +=i
+print(total)
+</details>
 
 #### Mission 2 :  
 Écrire un programme qui permet de compter le nombre total de chiffres dans un nombre.
 
 Par exemple le nombre de chiffres pour le nombre 987354 est 6.
+
+<details>
+<summary>Solution</summary> 
+toto
+</details>
+
+#### Mission 3
+Écrire un programme permettant de calculer la factorielle d'un nombre choisi par l'utilisateur.
+
+Par exemple, la factorielle de 4 est égale à 4 * 3 * 2 * 1
+
+<details>
+<summary>Solution</summary> 
+toto
+</details>
+
+#### Mission 4
+Écrire un programme qui permet d'inverser les chiffres d'un nombre.
+
+Par exemple, 67531 devient 13576
+
+<details>
+<summary>Solution</summary> 
+toto
+</details>
+
+#### Mission 5
+Écrire un programme utilisant une boucle while qui additionne les carrés des nombres entiers (en commençant par 1) tant que la somme reste inférieure ou égale à 300. Une fois que la somme dépasse 300, affichez la somme finale ainsi que le dernier nombre dont le carré a été ajouté.
+
+
+<details>
+<summary>Solution</summary> 
+toto
+</details>
+
+#### Mission 6
+Écrire un programme qui permet d'afficher la table de multiplication pour tous les nombres entre 1 et 10 (les deux inclus).
+
+Si le nombre est inférieur ou égale à 5, on souhaite afficher les résultats de ses multiplications par 1 jusqu'à 10.
+Sinon on affiche les résultats de multiplication de ce nombre par 1 à 5
+Le résultat sera affiché comme ceci :
+
+<details>
+<summary>Solution</summary> 
+toto
+</details>
+
+
+
+<details>
+<summary>Solution</summary> 
+toto
+</details>
+
+
+
