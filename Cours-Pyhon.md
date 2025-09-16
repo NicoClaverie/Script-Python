@@ -1033,7 +1033,12 @@ Par exemple le nombre de chiffres pour le nombre 987354 est 6.
 
 <details>
 <summary>Solution</summary> 
-toto
+nombre = input("Entrer le nombre : ")
+resultat = int(0)
+for i in nombre:
+    resultat += 1
+    
+print(f"Le nombre de chiffres pour le nombre {nombre} est {resultat}.")
 </details>
 
 #### Mission 3
