@@ -579,48 +579,39 @@ Source : https://colab.research.google.com/drive/1gGCa-52Qvm-Birl5zqE6ZH6FEQCM8e
 
 1.1 - Fais une boucle qui renvoie les valeurs de 0 à 9.  
 `indice`: Utilises la fonction range()
-<details>
-<summary>Solution</summary> 
+```
 for i in range(10):  
   print (i)
-</details>
+```
 
 1.2 - Fais une boucle qui renvoie les valeurs de 1 à 20.
-<details>
-<summary>Solution</summary> 
+```
 for i in range(1, 21):  
   print (i)
-</details>
-
+```
 1.3 - Fais une boucle qui renvoie les nombres pairs entre 2 et 20 inclus.
-<details>
-<summary>Solution</summary> 
+```
 for i in range(2, 21, 2):
     print(i)
-
+```
 ou
-
+```
 for i in range(1, 21):
     if i % 2 == 0:
         print(i)
-</details>
-
+```
 1.4 - Fais une boucle qui renvoie les valeurs de 10 à 1, donc dans l'ordre décroissant.
 
-<details>
-<summary>Solution</summary> 
+``` 
 for i in range(10, 0, -1):
     print(i)
-</details>
-
+```
 1.5 - Fais une boucle qui affiche 5 fois "Bonjour":
 
-<details>
-<summary>Solution</summary> 
+```
 for i in range(5):
     print("Bonjour")
-</details>
-
+```
 1.6 - Fais une boucle qui affiche "Bonjour", puis "aurevoir" 5 fois, comme dans l'exemple ci-dessous.
 
 ```
@@ -636,21 +627,17 @@ Bonjour
 Au revoir
 ```
 
-<details>
-<summary>Solution</summary> 
+```
 for i in range(5):
     print("Bonjour")
     print("Au revoir")
-</details>
-
+```
 1.7 - Fais une boucle qui affiche chaque lettre du mot "Blanquette", comme ceci:
 
-<details>
-<summary>Solution</summary> 
+```
 for i in "Blanquette":
     print(i)
-</details>
-
+```
 1.8 - Fais une boucle qui affiche en sortie, à chaque ligne, le numéro du tour de la boucle, comme ci-dessous.
 
 ```
@@ -665,56 +652,48 @@ C'est le tour numéro 8
 C'est le tour numéro 9
 ```
 
-<details>
-<summary>Solution</summary> 
+```
 for i in range(1, 10):
     print(f"C'est le tour numéro {i}")
-</details>
-
+```
 #### Loop sur les éléments d'une `list`
 2.1 - Fais une boucle qui affiche chacun des éléments de la list ci-dessous.
 `cartoon = ['Babar', "Pingu", "oui-oui"]`
 
-<details>
-<summary>Solution</summary> 
+```
 cartoon = ['Babar', "Pingu", "oui-oui"]
 for i in cartoon:
     print(i)
-</details>
-
+```
 2.2 - Fais une boucle qui n'affiche que les éléments de la liste ci-dessous qui commencent par la lettre "B".
 `names = ["Ivan", "Geoffrey", "Benjamin", "Berthe", "Coline", "Achraf", "Géraldine", "Camille", "Benoît"]`
 
-<details>
-<summary>Solution</summary> 
+```
 names = ["Ivan", "Geoffrey", "Benjamin", "Berthe", "Coline", "Achraf", "Géraldine", "Camille", "Benoît"]
 for i in names:
     if i[0] == "B":
         print(i)
-</details>
+```
 
 2.3 - Fais une boucle qui n'affiche que les éléments de la liste ci-dessous qui sont supérieurs à 5.
 `number = [0, -3, 10, 6, 4, 5, -23, 12, 32]`
-<details>
-<summary>Solution</summary> 
+
+```
 number = [0, -3, 10, 6, 4, 5, -23, 12, 32]
 for i in number:
     if i > 5:
         print(i)
-</details>
+```
 
 2.4 - Fais une boucle qui n'affiches que les éléments de la liste ci-dessous qui sont supérieurs à 25 et inférieurs à 50 lorsqu'on les élève au carré:
 `number = [0, -3, 10, 6, 4, 5, -23, 12, 32, 7]`
 
-<details>
-<summary>Solution</summary> 
 ```
 number = [0, -3, 10, 6, 4, 5, -23, 12, 32, 7]
 for i in number: 
     if i**2 > 25 and i**2 < 50:
         print(i)
 ```
-</details>
 
 
 
@@ -1017,65 +996,68 @@ Source : https://colab.research.google.com/drive/1QR2ZmMc0TMFN8HUYpMVa7lB_Ec-xEe
 #### Mission 1 :  
 Écrire un programme permettant de calculer la somme des entiers entre 0 et 1000 (tous deux inclus) qui sont divisibles par 2 ou par 5, mais pas par 10. (Le resultat est 250000)
 
-<details>
-<summary>Solution</summary> 
+```
 total = int(0)
 for i in range(1001):
     if (i % 2 == 0 or i % 5 == 0) and i % 10 !=0:
         total +=i
 print(total)
-</details>
+```
 
 #### Mission 2 :  
 Écrire un programme qui permet de compter le nombre total de chiffres dans un nombre.
 
 Par exemple le nombre de chiffres pour le nombre 987354 est 6.
 
-<details>
-<summary>Solution</summary> 
+```
 nombre = input("Entrer le nombre : ")
 resultat = int(0)
 for i in nombre:
     resultat += 1
     
 print(f"Le nombre de chiffres pour le nombre {nombre} est {resultat}.")
-</details>
+```
 
 #### Mission 3
 Écrire un programme permettant de calculer la factorielle d'un nombre choisi par l'utilisateur.
 
 Par exemple, la factorielle de 4 est égale à 4 * 3 * 2 * 1
 
-<details>
-<summary>Solution</summary> 
-
+```
 nombre = int(input("Quel est le nombre a factoriser : "))
 nombreFinal = 1
 for i in range(1, nombre +1):
     nombreFinal *=i
     
 print(f"La factorielle du nombre {nombre} est {nombreFinal}.")
-
-</details>
+```
 
 #### Mission 4
 Écrire un programme qui permet d'inverser les chiffres d'un nombre.
 
 Par exemple, 67531 devient 13576
+```
+debut = str(input("Quel nombre on inverse : "))
+inverse = ""
+for i in debut:
+    inverse = i + inverse
 
-<details>
-<summary>Solution</summary> 
-toto
-</details>
+print(f"Nombre inversé {inverse}")
+```
+Ne fonctionne pas pour l'exercice mais permet d'inverser l'affichage
+```
+debut = str(input("Quel nombre on inverse : "))
+
+for i in reversed(debut):
+    print(i)
+```
 
 #### Mission 5
 Écrire un programme utilisant une boucle while qui additionne les carrés des nombres entiers (en commençant par 1) tant que la somme reste inférieure ou égale à 300. Une fois que la somme dépasse 300, affichez la somme finale ainsi que le dernier nombre dont le carré a été ajouté.
 
+```
 
-<details>
-<summary>Solution</summary> 
-toto
-</details>
+```
 
 #### Mission 6
 Écrire un programme qui permet d'afficher la table de multiplication pour tous les nombres entre 1 et 10 (les deux inclus).
@@ -1084,11 +1066,9 @@ Si le nombre est inférieur ou égale à 5, on souhaite afficher les résultats 
 Sinon on affiche les résultats de multiplication de ce nombre par 1 à 5
 Le résultat sera affiché comme ceci :
 
-<details>
-<summary>Solution</summary> 
-toto
-</details>
+```
 
+```
 
 
 <details>
