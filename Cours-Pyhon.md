@@ -1048,7 +1048,14 @@ Par exemple, la factorielle de 4 est égale à 4 * 3 * 2 * 1
 
 <details>
 <summary>Solution</summary> 
-toto
+
+nombre = int(input("Quel est le nombre a factoriser : "))
+nombreFinal = 1
+for i in range(1, nombre +1):
+    nombreFinal *=i
+    
+print(f"La factorielle du nombre {nombre} est {nombreFinal}.")
+
 </details>
 
 #### Mission 4
