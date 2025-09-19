@@ -1056,7 +1056,17 @@ for i in reversed(debut):
 Écrire un programme utilisant une boucle while qui additionne les carrés des nombres entiers (en commençant par 1) tant que la somme reste inférieure ou égale à 300. Une fois que la somme dépasse 300, affichez la somme finale ainsi que le dernier nombre dont le carré a été ajouté.
 
 ```
+somme = 0
+nombre = 1
+dernierNombre = 0
 
+while (somme + nombre**2) <= 300:
+    somme += nombre**2
+    dernierNombre = nombre
+    nombre += 1
+
+print(f"La somme finale est : {somme}")
+print(f"Le dernier nombre dont le carré a été ajouté est : {dernierNombre}")
 ```
 
 #### Mission 6
@@ -1066,6 +1076,35 @@ Si le nombre est inférieur ou égale à 5, on souhaite afficher les résultats 
 Sinon on affiche les résultats de multiplication de ce nombre par 1 à 5
 Le résultat sera affiché comme ceci :
 
+> la table de multiplication de 1  
+> 1 2 3 4 5 6 7 8 9 10
+> 
+> la table de multiplication de 2  
+> 2 4 6 8 10 12 14 16 18 20
+> 
+> la table de multiplication de 3  
+> 3 6 9 12 15 18 21 24 27 30
+> 
+> la table de multiplication de 4  
+> 4 8 12 16 20 24 28 32 36 40
+> 
+> la table de multiplication de 5  
+> 5 10 15 20 25 30 35 40 45 50
+> 
+> la table de multiplication de 6  
+> 6 12 18 24 30
+> 
+> la table de multiplication de 7  
+> 7 14 21 28 35
+> 
+> la table de multiplication de 8  
+> 8 16 24 32 40
+> 
+> la table de multiplication de 9  
+> 9 18 27 36 45
+> 
+> la table de multiplication de 10  
+> 10 20 30 40 50
 ```
 
 ```
