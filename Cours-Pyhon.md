@@ -1106,14 +1106,29 @@ Le résultat sera affiché comme ceci :
 > la table de multiplication de 10  
 > 10 20 30 40 50
 ```
-
+for number in range(1, 11, +1):
+    if number <= 5:
+        print(f"La table de multiplication de {number}")
+        multiple = 1
+        resultat = 0
+        resultats = " "
+        while resultat < number*10:
+            resultat = multiple * number
+            resultats += (str(f"{resultat} "))
+            multiple += 1
+        print(resultats)
+    else:
+        print(f"La table de multiplication de {number}")
+        multiple = 1
+        resultat = 0
+        resultats = " "
+        while resultat < number*5:
+            resultat = multiple * number
+            resultats += (str(f"{resultat} "))
+            multiple += 1
+        print(resultats)
 ```
 
-
-<details>
-<summary>Solution</summary> 
-toto
-</details>
 
 
 
