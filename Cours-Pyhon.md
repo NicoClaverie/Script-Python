@@ -1129,6 +1129,59 @@ for number in range(1, 11, +1):
         print(resultats)
 ```
 
+## 2.1 Python Comment on the code, debugging...
 
+### Commenter son code
+Dans tout langage de programmation, il revêt une grande importance d'expliquer ton code. Pourquoi ? Il existe plusieurs raisons à cela :
 
+- La première raison, c'est d'aider les autres personnes qui vont examiner ton code à avoir une meilleure compréhension de ce qui se passe dans ton code, ainsi que de ton raisonnement.
 
+En effet, nous parlons d'un langage de programmation. Chacun assimile l'apprentissage d'un nouveau langage à sa manière, et cela implique d'acquérir les compétences nécessaires pour comprendre ce que l'on apprend dans ce domaine en tant qu'apprenant.
+
+Ce qui est particulièrement fascinant, c'est que chaque individu peut avoir une approche logique différente. Il est étonnant de constater que même certains de tes camarades, avec qui tu te sens particulièrement connecté, peuvent avoir une logique très différente de la tienne lorsqu'il s'agit de coder.
+
+Il n'y a rien de mal à cela. Au contraire, en partageant et en commentant ton code, tu offres aux autres la possibilité de mieux te comprendre. Cela permet à chacun de comprendre ta démarche en matière de programmation, ce qui peut parfois servir d'inspiration pour les autres.
+
+- Aussi, lorsque tu travailles en groupe, tes camarades n'ont pas forcément le temps ou l'envie de passer du temps à déchiffrer ton code. Pour le bien de tous, il est préférable de commenter ton code, ça permet d'aller à l'essentiel plus rapidement.
+
+- Enfin, une autre raison : fais-le pour toi ! Bien que tu aies codé toi-même ce bout de code, il est très probable que lorsque tu reviendras dessus dans quelques mois, tu n'y comprennes plus rien... Et c'est normal, car depuis, tu as bien évolué aussi...
+
+### Chaining
+En Python, il est courant de faire ce qu'on appelle du ... chaining.
+Mais de quoi s'agit-il exactement ?
+Il s'agit d'enchaîner les méthodes les unes après les autres sur un même objet, pour arriver à un résultat souhaité.
+Prenons un exemple:
+```
+# Voici ci-dessous une liste. Chaque élément représente un mot. On aimerait que chacun des mots commencent par une majuscule.
+song = ['tsamina','mina','eh','eh','Waka','Waka','hee','he','tsamina','mina','zangalewa','this','time','for','africa']
+
+# On fait du chaining et on attribue le résultat à la variable result.
+result = " ".join(song).title().split()
+print(result)
+
+> ['Tsamina',
+ 'Mina',
+ 'Eh',
+ 'Eh',
+ 'Waka',
+ 'Waka',
+ 'Hee',
+ 'He',
+ 'Tsamina',
+ 'Mina',
+ 'Zangalewa',
+ 'This',
+ 'Time',
+ 'For',
+ 'Africa']
+```
+
+Ci dessus, on a enchaîné les méthodes les unes après les autres, pour arriver au résultat souhaité.
+A chaque fois qu'il y a une méthode qui est utilisée, l'objet est modifié:
+
+- La première méthode **.join()** permet de joindre les éléments en une seule chaîne de caractères
+- La deuxième méthode **.title()** permet de mettre la première lettre de chaque mot en majuscule.
+- La troisième méthode **.split()** permet d'ordonner la chaîne de caractères en liste. Si on indique rien entre parenthèses, chaque espace fera office de séparateur.
+On se retrouve donc avec une liste, dont chaque élément ont été modifiés.
+
+Challenge
