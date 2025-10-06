@@ -1185,3 +1185,161 @@ A chaque fois qu'il y a une méthode qui est utilisée, l'objet est modifié:
 On se retrouve donc avec une liste, dont chaque élément ont été modifiés.
 
 Challenge
+
+### Mission 1: Commenter son code  
+Source : https://colab.research.google.com/drive/1VBUiHUWEafsRaDRB5HIVTVnUBPmqxvBV#scrollTo=oCgC-9NdZ6-g  
+Une clé pour progresser rapidement en Python:  
+Commenter le code.   
+On ne te le répètera jamais assez, commente ton code.  
+Cette bonne pratique va te rassurer, car tu comprends ainsi ce qu'il se passe à chaque ligne de code, sans louper d'étapes.  
+
+"*Rien ne sert de courir, il faut partir à point.*"
+```
+```python
+[40] compteur = 0         # Initialisation de la variable "compteur" avec la valeur 0.
+     compteur_2 = 10      # Initialisation de la variable "compteur_2" avec la valeur 10.
+     for i in range(10): # Une boucle avec 10 itération (0,1,2,3,4,5,6,7,8,9)
+         compteur += 2 * i # la variable compteur augmente sa valeur totale à chaque tour. 2 * 0 au premier tour + 2 * 1 au deuxième tour...
+     compteur_2 += i     # la variable compteur_2 est à l'extérieur de la boucle.
+                         # Sa valeur 10 va s'additionner à la valeur de i lorsque la boucle se termine.
+```
+C'est à ton tour de commenter le code ci-dessous.
+Pour t'entraîner, n'hésite pas à faire le calcul de tête, pour savoir combien de fois apparaîtront chaque mot.
+
+```
+une_macedoine = [] 
+
+for nectarifaire in range(4, 120, 3): 
+    if nectarifaire > 40:
+        une_macedoine.append("carotte") 
+        une_macedoine.append("flageolet") 
+```
+Solution :
+```
+une_macedoine = [] # Créer un liste
+
+for nectarifaire in range(4, 120, 3): # Démarage de la boucle for, qui démarre de 4 jusqu'a 120 par bond de 3
+    if nectarifaire > 40: # Mise en place de la condition, si nectarifaire est inférieur a 40 alors
+        une_macedoine.append("carotte") # Ajout de carotte dans la liste une_macedoine
+        une_macedoine.append("flageolet") # Ajout de flageolet dans la liste une_macedoine
+```
+
+
+### Mission 2 : Débugger son code
+Tu as déjà du remarqué que quand tu débutes en Python, et que tu vois un code comme ci-dessus, ça donne des sueurs froides.
+En effet, on est rapidement perdu par rapport à ce qu'il se passe.
+Pas de panique ! C'est tout à fait normal.
+Connaître les objets et leurs différences, c'est une chose. Mais parvenir à comprendre ce qu'il se passe quand on code, c'en est une autre.
+
+```
+```python
+[32] empty_list = []
+     compteur = 0
+
+     for i in range(5):
+         print(i)
+         if i ** 2 > 3:
+             print(i)
+             print(compteur)
+             empty_list.append(i)
+             print(empty_list)
+         print(empty_list)
+         compteur += 3
+```
+
+Comme tu peux le voir ci-dessus, plusieurs `print()` ont été placés. C'est très utile pour comprendre ce qu'il se passe dans le code.
+Si tu utilises cette bonne pratique, ta progression dans la mâitrise de Python va considérablement augmenter !
+
+Ton objectif dans cette mission, c'est de savoir ce qui est contenu dans chacune des variables, après exécution du code ci-dessous.
+Pour y parvenir, tu as uniquement le droit de mettre des `print()` intermédiaires (c'est à dire entre les lignes), en 'printant"(affichant)la ou les variables de ton choix. Pour cette mission, tu n'as pas le droit d'afficher les variables à la fin de la cellule, ou dans une autre cellule.
+
+```
+joga_bonito = []
+joga_bonito_1 = []
+compteur = 0
+
+for vvv in "Bonjour":
+  for v in vvv:
+    bonjour = "¿Hola qué tal amigos?"
+    joga_bonito.append((v, bonjour))
+  joga_bonito_1.append(v)
+  compteur += len(bonjour)
+```
+Solution :
+```
+joga_bonito = []
+print (joga_bonito)
+joga_bonito_1 = []
+print (joga_bonito_1)
+compteur = 0
+print (compteur)
+
+for vvv in "Bonjour":
+  print (vvv)
+  for v in vvv:
+    print (v)
+    bonjour = "¿Hola qué tal amigos?"
+    print (bonjour)
+    joga_bonito.append((v, bonjour))
+    print (joga_bonito)
+  joga_bonito_1.append(v)
+  print (joga_bonito_1)
+  compteur += len(bonjour)
+  print (compteur)
+```
+
+### # Mission 3 - Calcul
+
+Pour cette mission, inspirée d'un jeu télévisé, tu vas essayer de résoudre le problème suivant:
+Tu dois combiner les variables avec des opérateurs mathématiques (*+-/)
+pour trouver le résultat 466.  
+Tu assigneras le résultat à la variable `answer`.  
+Attention, pour cette mission, chaque variable n'est utilisable qu'une seule fois.
+
+```
+var_1 = 12
+var_2 = 20
+var_3 = 15
+var_4 = 3
+var_5 = 30
+
+# Votre code ici
+```
+Solution :
+```
+var_1 = 12
+var_2 = 20
+var_3 = 15
+var_4 = 3
+var_5 = 30
+
+answer = (var_5 * var_3) + (var_2 - (12/3))
+print (answer)
+```
+
+### # Mission 4 : Manipulation des objets et leur type
+
+Pour cette mission, tu vas devoir concaténer des variables pour reproduire la phrase suivante:
+
+`"1 bouche bouche bée qu'1 bouche bouche la bouche de douche de la boucherie."`  
+
+Pour y parvenir, tu peux additionner tes variables. Tu peux aussi modifier le type d'une variable, uniquement avec les  [`built-in function.`](https://docs.python.org/3/library/functions.html)
+
+
+```
+var_1 = 1
+var_2 = "bouche"
+var_3 = "bée"
+var_4 = "la"
+var_5 = "qu'"
+var_6 = "de"
+var_7 = "douche"
+var_8 = "la"
+var_9 = "boucherie."
+
+# Votre code ici
+```
+Solution :
+```
+
+```
