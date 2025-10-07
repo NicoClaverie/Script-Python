@@ -1288,7 +1288,7 @@ for vvv in "Bonjour":
   print (compteur)
 ```
 
-### # Mission 3 - Calcul
+### Mission 3 - Calcul
 
 Pour cette mission, inspirée d'un jeu télévisé, tu vas essayer de résoudre le problème suivant:
 Tu dois combiner les variables avec des opérateurs mathématiques (*+-/)
@@ -1317,7 +1317,7 @@ answer = (var_5 * var_3) + (var_2 - (12/3))
 print (answer)
 ```
 
-### # Mission 4 : Manipulation des objets et leur type
+### Mission 4 : Manipulation des objets et leur type
 
 Pour cette mission, tu vas devoir concaténer des variables pour reproduire la phrase suivante:
 
@@ -1340,6 +1340,57 @@ var_9 = "boucherie."
 # Votre code ici
 ```
 Solution :
+```
+var_1 = 1
+var_2 = "bouche"
+var_3 = "bée"
+var_4 = "la"
+var_5 = "qu'"
+var_6 = "de"
+var_7 = "douche"
+var_8 = "la"
+var_9 = "boucherie."
+
+reponse = (
+    str(var_1) + " " + # 1
+    var_2 + " " + # bouche
+    var_2 + " " + # bouche
+    var_3 + " " + # bée
+    var_5 + # qu'
+    str(var_1) + " " + # 1
+    var_2 + " " + # bouche
+    var_2 + " " + # bouche
+    var_4 + " " + # la
+    var_2 + " " + # bouche
+    var_6 + " " + # de
+    var_7 + " " + # douche
+    var_6 + " " + # de
+    var_4 + " " + # la
+    var_9 # boucherie
+    )
+
+print(reponse)
+```
+
+### Mission 5: Affectation parallèle
+
+En python, certains objets peuvent contenir d'autres objets.  
+C'est le cas de l'objet de type `tuple`, qui peut contenir plusieurs éléments, qui sont eux-même des objets d'un certain type.  
+C'est le cas ci-dessous, avec un tuple qui contient `3 élément: 1 int et 2 strings`.
+
+Ton objectif est d'affecter chacune des valeurs contenues dans le tuple à des variables disctinctes. Tu pourras ensuite répondre aux questions qui suivent, en indiquant simplement une variable par cellule de code.
+```
+a_tuple = (3, "Wild Code School", "Rose")
+```
+Quel est le nom de l'école ?
+```
+
+```
+Quelle est la couleur du logo de la Wild Code School ?
+```
+
+```
+Combien de projets tu vas réaliser pendant ta formation ?
 ```
 
 ```
