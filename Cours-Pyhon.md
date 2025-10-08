@@ -1382,15 +1382,30 @@ Ton objectif est d'affecter chacune des valeurs contenues dans le tuple à des v
 ```
 a_tuple = (3, "Wild Code School", "Rose")
 ```
+Solution
+```
+a_tuple = (3, "Wild Code School", "Rose")
+
+nbProjet, nomEcole, colorLogo = a_tuple
+```
 Quel est le nom de l'école ?
 ```
-
+print(nomEcole)
 ```
 Quelle est la couleur du logo de la Wild Code School ?
 ```
-
+print(colorLogo)
 ```
 Combien de projets tu vas réaliser pendant ta formation ?
+```
+print(nbProjet)
+```
+
+### Mission 6: Compteur
+
+Initialise un compteur qui compte le nombre de "on" dans la phrase suivante:
+`phrase = "Ton tonton tond un thon à Thonon."`
+
 ```
 
 ```
