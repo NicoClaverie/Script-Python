@@ -1407,5 +1407,48 @@ Initialise un compteur qui compte le nombre de "on" dans la phrase suivante:
 `phrase = "Ton tonton tond un thon à Thonon."`
 
 ```
+phrase = "Ton tonton tond un thon à Thonon."
+print (f"Il y a {phrase.count('on')} fois les lettres 'on' dans la phrase." )
+```
 
+### Mission 7: Chaining
+
+Tu sais ce qu'est le "chaining" ?  
+Concrètement, il s'agit d'enchaîner des méthodes les unes après les autres (en série) pour arriver à tes fins.  
+Un peu comme un bon footballeur ferait pour marquer un but (passement de jambes, crochet, petit-pont, frappe et but !), tu vas devoir enchaîner les méthodes les unes après les autres pour atteindre ton objectif.  
+Ton objectif, c'est d'appliquer plusieurs méthodes les unes à la suites des autres (chaining) pour obtenir la phrase suivante:  
+`Ah mais vous savez, je ne pense pas qu'il y ai de bonnes ou de mauvaises situations.`  
+Tu as le droit d'utiliser plusieurs fois la même méthode.
+
+```
+phrase = "Ah maIS vows SavUZ, je ge PUHSe Pas qw'il y Ai de BoggUS ow de MawVaiSUS siTwatIOHs."
+
+# Separe la premiere lettre du reste de la phrase
+firstLetter = phrase[0]
+
+# Passe en minuscule le reste de la phrase
+restSentence = phrase[1:].lower()
+
+# Assemblage de la premiere lettre et du reste de la phrase 
+PhraseMini = firstLetter + restSentence
+
+# Remplace les lettres u par e
+replaceUE = PhraseMini.replace('u', 'e')
+
+# Remplace les lettres w par u
+replaceWU = replaceUE.replace('w', 'u')
+
+# Remplace les lettres g par n
+replaceGN = replaceWU.replace('g', 'n')
+
+# Separe le premier mot
+firstWord = replaceGN[:1]
+
+# Applique le changement de lettre au reste de la phrase 
+restSentence1 = replaceGN[2:].replace('h', 'n')
+
+phraseFinale = firstWord + restSentence1
+
+
+print(phraseFinale)
 ```
