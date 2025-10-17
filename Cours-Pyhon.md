@@ -1426,8 +1426,8 @@ phrase = "Ah maIS vows SavUZ, je ge PUHSe Pas qw'il y Ai de BoggUS ow de MawVaiS
 # Separe la premiere lettre du reste de la phrase
 firstLetter = phrase[0]
 
-# Passe en minuscule le reste de la phrase
-restSentence = phrase[1:].lower()
+# Passe en minuscule le reste de la phrase et remplace le H par le n
+restSentence = phrase[1:].replace('H', 'n').lower()
 
 # Assemblage de la premiere lettre et du reste de la phrase 
 PhraseMini = firstLetter + restSentence
@@ -1441,14 +1441,139 @@ replaceWU = replaceUE.replace('w', 'u')
 # Remplace les lettres g par n
 replaceGN = replaceWU.replace('g', 'n')
 
-# Separe le premier mot
-firstWord = replaceGN[:1]
-
-# Applique le changement de lettre au reste de la phrase 
-restSentence1 = replaceGN[2:].replace('h', 'n')
-
-phraseFinale = firstWord + restSentence1
+print(replaceGN)
+```
 
 
-print(phraseFinale)
+## 2.2 Python - Strings
+
+### Introduction
+Les chaînes sont un des types les plus utilisés en Python. Le nom de chaîne fait référence à « chaîne de caractères », une séquence de caractères, donc. Un caractère peut être une lettre, un chiffre, une espace, un signe de ponctuation, mais aussi un emoji, un symbole, un truc invisible... Dans cette quête, tu vas t'entraîner à manipuler des chaînes !
+
+Une chaîne peut s'écrire entre deux apostrophes, ou entre deux guillemets droits, comme ceci :
+```
+str_1 = "Salut wilder !" 
+str_2 = 'Salut wilder !'
+```
+
+### Les chaînes de caractères, qu'est-ce ?
+Une chaîne de caractères est contenue dans une variable de type `str`.
+
+Comme beaucoup de choses en Python, une chaîne est un objet. On reviendra sur ce concept plus tard, ce qu'il faut savoir là maintenant est qu'à chaque chaîne est associée des fonctions dédiées, qu'on appelle des *méthodes*.
+
+### Sélectionner les caractères
+Les chaînes sont indexées, ce qui signifie que chaque caractère dedans a une position, qui démarre à `0`. On peut aussi utiliser des positions négatives, en partant de la fin de la chaîne, qui correspond à `-1`.
+
+```
+s = 'Fudge'
+s[0]  # 'F'
+s[3]  # 'g'
+s[-1] # 'e'
+```
+On peut aussi utiliser des intervalles (*slices*) pour récupérer les caractères entre deux positions (en excluant la borne supérieure). On les appelle des *sous-chaînes (substrings)*, comme ceci :
+   |F |  u |  d  | g  | e|
+   |:-:|:-:|:-:|:-:|:-:|
+   |0|   1|   2|   3|   4 |
+ | -5 | -4 | -3 | -2 | -1  
+
+```
+s = 'Fudge'
+s[0:2] # 'Fu'
+s[2:5] # 'dge'
+s[:4]  # 'Fudg'
+s[3:]  # 'ge'
+s[:]   # 'Fudge'
+```
+
+### Les chaînes sont immuables
+Un objet immuable ne peut pas être modifié. Une fois créée, la chaîne de caractères reste fixe, ce qui fait qu'on ne peut pas assigner un caractère à une position :
+
+```
+# On essaie de remplacer le b par m
+>>> word = "bonjour"
+>>> word[0] = "m"
+
+TypeError: 'str' object does not support item assignment
+```
+
+Cependant, il est toujours possible de créer des *copies* modifiées de la chaîne originale, par exemple avec des fonctions. La méthode `.replace()` permet de créer une copie d'une chaîne où une sous-chaîne est remplacée par une autre :
+
+```
+>>> print(word.replace('b','m'))
+"monjour"
+```
+
+Cette méthode ne modifie pas la chaîne `word`, elle en crée une nouvelle ! On peut le voir ici :
+
+```
+>>> word = "bonjour"
+# Chaque objet Python a un identifiant unique
+>>> print(id(word))
+140194894989872
+
+# En utilisant .replace(), on crée un nouvel objet, son id est différent
+print(id(word.replace('b','m')))
+950194798731504
+```
+Comme tu t'en doutes peut-être, s'il existe des objets immuables, il en existent d'autres *muables*... qui viendront très bientôt.
+
+### Quelques détails supplémentaires
+
+Une chaîne peut être vide !
+```
+s = "" # La chaîne vide
+```
+
+Les chaînes peuvent être concaténées avec l'opérateur `+` :
+
+```
+a = 'aze'
+b = 'rty'
+c = ''
+
+print(a + b) # 'azerty'
+print(a + c) # 'aze'
+```
+
+### Ressources supplémentaires
+
+> Plein d'exemples de chaînes, dans la documentation officielle de Python  
+> https://docs.python.org/fr/3/tutorial/introduction.html#strings
+
+> Quelques exemples de méthodes de chaînes  
+> https://python.developpez.com/faq/?page=String
+
+> Quelques opérations utiles sur les chaînes  
+> https://www.w3schools.com/python/python_strings.asp
+
+
+### Challenge
+
+Source : https://colab.research.google.com/drive/19SJuA-6lk05gvx4Dfs9Vsydglj5EgPHm?usp=sharing
+
+#### Mission 1
+
+*What*'s the lenght of the following string ?  
+`s = "Taumata whakatangihanga koauau o tamatea turi pukaka piki maungah oronuku pokai whenuaki tanatahu "`
+
+Solution :  
+```
+
+```
+Now, count only non-space characters and display how many there is. Remember, using a for loop on a string will browse all the individual characters of it!  
+`s = "Taumata whakatangihanga koauau o tamatea turi pukaka piki maungah oronuku pokai whenuaki tanatahu "`
+
+Solution :  
+```
+
+```
+
+Solution :  
+```
+
+```
+
+Solution :  
+```
+
 ```
