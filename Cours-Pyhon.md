@@ -1558,14 +1558,26 @@ Source : https://colab.research.google.com/drive/19SJuA-6lk05gvx4Dfs9Vsydglj5EgP
 
 Solution :  
 ```
-
+s = "Taumata whakatangihanga koauau o tamatea turi pukaka piki maungah oronuku pokai whenuaki tanatahu "
+len(s)
 ```
 Now, count only non-space characters and display how many there is. Remember, using a for loop on a string will browse all the individual characters of it!  
 `s = "Taumata whakatangihanga koauau o tamatea turi pukaka piki maungah oronuku pokai whenuaki tanatahu "`
 
 Solution :  
 ```
+s = "Taumata whakatangihanga koauau o tamatea turi pukaka piki maungah oronuku pokai whenuaki tanatahu "
+s = s.replace(' ', '')
+len(s)
+```
 
+#### Mission 2
+Ask the user for a string, then for a character (we assume user input follows the rules). Then, display the positions, **starting with 1**, of all occurrences of the character within the string.
+
+For example, for the word "welcome" and for the character "e", the script will display:
+```
+position: 2
+position: 7
 ```
 
 Solution :  
