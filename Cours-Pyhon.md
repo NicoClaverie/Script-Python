@@ -1582,8 +1582,32 @@ position: 7
 
 Solution :  
 ```
+# Mise en place de la variable pour la phrase
+phrase = input("Quel est le mot ?")
+# Mise en place de la variable pour la lettre a trouver
+lettre = input("Quel lettre est a chercher ?")
 
+# Initialisation du tableau des positions
+positions = []
+
+# Début de la boucle for avec enumarate pour trouver toutes les positions et la mettre en tableau
+for index, caractere in enumerate(phrase):
+    # Verification si la lettre est bien présente dans le mot
+    if caractere == lettre:
+        # Mise en tableau avec append pour ajouter les valeurs
+        positions.append(index)
+
+# Début de la boucle pour extraire les valeurs du tableau et les afficher ligne par ligne
+for i in positions:
+    print (f"Position : {i}")
 ```
+
+#### Mission 3
+
+Ask the user for a string, then for an integer. Then, display the string repeated as many times as the given integer.
+
+For example, `badger` and `4` will display `badgerbadgerbadgerbadger`
+
 
 Solution :  
 ```
