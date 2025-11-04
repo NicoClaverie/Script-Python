@@ -1611,5 +1611,17 @@ For example, `badger` and `4` will display `badgerbadgerbadgerbadger`
 
 Solution :  
 ```
+# Mise en place de la variable pour la phrase
+mot = input("Quel est le mot ?")
+# Mise en place de la variable pour la lettre a trouver
+nombre = int(input("Combien de répétition ?"))
 
+liste = []
+
+for i in range(nombre):
+    liste.append(mot)
+
+resultat = "".join(liste)
+
+print (resultat)
 ```
