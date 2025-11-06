@@ -1616,12 +1616,71 @@ mot = input("Quel est le mot ?")
 # Mise en place de la variable pour la lettre a trouver
 nombre = int(input("Combien de répétition ?"))
 
+# Initialisation de la variable pour le tableau
 liste = []
 
+# Début de la boucle avec un nombre de boucle maximum défini par la variable nombre
 for i in range(nombre):
+    # Utilisation de .append pour ajouter chaque occurence a mesure des itérations
     liste.append(mot)
 
+# Mise en forme dans une variable pour retirer les caracteres indesirables 
 resultat = "".join(liste)
 
 print (resultat)
+```
+
+#### Mission 4
+
+Display the following string without including the spaces at the beginning and end. There's a `string` method that does exactly that, look at the documentation!
+
+Solution :  
+```
+s = "   Data Analyst  "
+
+print (s.strip())
+```
+
+#### Mission 5
+
+Ask the user for a string, then for a character, then for another character.
+
+Then, display the string where the occurences of the first character are replaced by the second one.  
+For example:
+* string = `"Boulgour"`  
+* 1st_char = `"g"`
+* 2nd_char = `"v"`
+
+Result : `"Boulvour"`
+
+Solution :  
+```
+# Mise en place de la variable pour le mot
+mot = input("Quel est le mot ?")
+# Mise en place de la variable pour la lettre a trouver
+lettreA = input("Quel lettre il faut remplacer ?")
+lettreB = input("Par quel lettre ?")
+
+# Utilisation de .replace pour remplacer la lettre
+print (mot.replace(lettreA, lettreB))
+```
+
+#### Mission 6
+
+Ask the user for a string. Then, display the same string with all vowels converted to uppercase, and all consonants converted to lowercase.  
+For example:
+* string = `"Papa's got a brand new bag"`  
+Result : `"pApA's gOt A brAnd nEw bAg"`
+
+Solution :  
+```
+
+```
+
+
+
+
+Solution :  
+```
+
 ```
