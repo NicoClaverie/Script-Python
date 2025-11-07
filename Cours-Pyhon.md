@@ -1674,7 +1674,21 @@ Result : `"pApA's gOt A brAnd nEw bAg"`
 
 Solution :  
 ```
+texte_original = input("Quel est la phrase a modifier ?" )
 
+# Voyelles minuscules à remplacer
+source = "BCDFGHJKLMNPQRSTVWXZaeiouyàéèêëïîôùü"
+
+# Voyelles majuscules de remplacement (doit avoir la même longueur que voyelles_min)
+remplacement = "bcdfghjklmnpqrstvwxzAEIOUYÀÉÈÊËÏÎÔÙÜ"
+
+# Création de la table de traduction
+table_traduction = str.maketrans(source, remplacement)
+
+# Application de la traduction
+texte_modifie = texte_original.translate(table_traduction)
+
+print(texte_modifie)
 ```
 
 
