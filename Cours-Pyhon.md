@@ -154,40 +154,40 @@ Les opérateurs sont essentiels en programmation : ils permettent de réaliser d
 ### Les opérateurs arithmétiques
 Ces opérateurs permettent d'effectuer des opérations mathématiques comme par exemple l'addition ou encore la soustraction. Voici une liste des opérateurs arithmétiques que tu utiliseras fréquemment :
 
-|Opérateur|Opération|Exemples|Résultat|
-|:-:|:-:|:-:|:-:|
-|+|Addition|5 + 2|7|
-|+|Soustraction|5 - 2|3|
-|*|Multiplication|5 * 2|10|
-|/|Division|5 / 2|2.5|
-|//|Division entière|5 // 2|2|
-|%|Modulo (reste de la division)|5 % 2|1|
-|**|Exponentiation|5 ** 2|25|
+| Opérateur |           Opération           | Exemples | Résultat |
+| :-------: | :---------------------------: | :------: | :------: |
+|     +     |           Addition            |  5 + 2   |    7     |
+|     +     |         Soustraction          |  5 - 2   |    3     |
+|     *     |        Multiplication         |  5 * 2   |    10    |
+|     /     |           Division            |  5 / 2   |   2.5    |
+|    //     |       Division entière        |  5 // 2  |    2     |
+|     %     | Modulo (reste de la division) |  5 % 2   |    1     |
+|    **     |        Exponentiation         |  5 ** 2  |    25    |
 
 ### Les opérateurs de comparaison
 
 Ces opérateurs permettent de comparer deux valeurs, et le résultat est un booléen (`True` ou `False`). Voici une liste des opérateurs de comparaison avec des exemples :
 
-|Opérateur|Opération|Exemples|Résultat|
-|:-:|:-:|:-:|:-:|
-|<|Inférieur|9 < 4.5|False|
-|<=|Inférieur ou égal|9 <= 4.5|False|
-|>|Supérieur|9 > 4.5|True|
-|>=|Supérieur ou égal|9 >= 4.5|True|
-|==|Egal|9 == 4.5|False|
-|!=|Différent|9 != 4.5|True|
-|is|Identique|9 is 4.5|False|
-|is not|Non identique|9 is not 4.5|True|
+| Opérateur |     Opération     |   Exemples   | Résultat |
+| :-------: | :---------------: | :----------: | :------: |
+|     <     |     Inférieur     |   9 < 4.5    |  False   |
+|    <=     | Inférieur ou égal |   9 <= 4.5   |  False   |
+|     >     |     Supérieur     |   9 > 4.5    |   True   |
+|    >=     | Supérieur ou égal |   9 >= 4.5   |   True   |
+|    ==     |       Egal        |   9 == 4.5   |  False   |
+|    !=     |     Différent     |   9 != 4.5   |   True   |
+|    is     |     Identique     |   9 is 4.5   |  False   |
+|  is not   |   Non identique   | 9 is not 4.5 |   True   |
 
 ### Les opérateurs logiques
 
 Comme pour les opérateurs de comparaison, les opérateurs logiques renvoient un booléen. Tu rencontreras les opérateurs `and`, `or`, et `not`. Le tableau ci-dessous montre quelques exemples :
 
-| Opérateur | Opération | Exemple | Résultat |
-|---|---|---|---|
-| **and** | Vérifie si deux expressions sont **toutes les deux vraies** | `x = 12`<br>`y = -32`<br>`(x > 0) and (y > 0)` | **False**<br>Une seule des deux expressions est vraie |
-| **or** | Vérifie si parmi deux expressions **l'une ou l'autre est vraie** | `x = 12`<br>`y = -32`<br>`(x > 0) or (y > 0)` | **True**<br>Une des deux expressions est vraie |
-| **not** | Inverse le résultat d'une expression | `not (9 <= 4.5)` | **True**<br>L'expression initiale renvoie False, le résultat final est donc True. |
+| Opérateur | Opération                                                        | Exemple                                        | Résultat                                                                          |
+| --------- | ---------------------------------------------------------------- | ---------------------------------------------- | --------------------------------------------------------------------------------- |
+| **and**   | Vérifie si deux expressions sont **toutes les deux vraies**      | `x = 12`<br>`y = -32`<br>`(x > 0) and (y > 0)` | **False**<br>Une seule des deux expressions est vraie                             |
+| **or**    | Vérifie si parmi deux expressions **l'une ou l'autre est vraie** | `x = 12`<br>`y = -32`<br>`(x > 0) or (y > 0)`  | **True**<br>Une des deux expressions est vraie                                    |
+| **not**   | Inverse le résultat d'une expression                             | `not (9 <= 4.5)`                               | **True**<br>L'expression initiale renvoie False, le résultat final est donc True. |
 
 
 ## Exercice 
@@ -700,34 +700,34 @@ for i in number:
 
 ### Boucles et alternatives en Python
 
-| Type | Exemple | Résultat / Utilité |
-|------|---------|---------------------|
-| **for + range** | `for i in range(5): print(i)` | Affiche `0 1 2 3 4` |
-| **for sur liste** | `for fruit in ["pomme","banane"]: print(fruit)` | Parcourt une liste d’éléments |
-| **for sur chaîne** | `for c in "Python": print(c)` | Parcourt chaque caractère |
-| **for sur dict** | `for k,v in {"a":1,"b":2}.items(): print(k,v)` | Parcourt clés et valeurs |
-| **while** | `while x < 5: print(x); x+=1` | Répète tant que condition vraie |
-| **break** | `for i in range(5): if i==3: break` | Sort de la boucle immédiatement |
-| **continue** | `for i in range(5): if i==2: continue; print(i)` | Ignore l’itération en cours |
-| **else avec for/while** | `for i in range(3): print(i) else: print("fin")` | S’exécute si pas de `break` |
-| **boucles imbriquées** | `for i in range(2): for j in range(3): print(i,j)` | Boucles dans des boucles |
-| **enumerate** | `for i,v in enumerate(["a","b"]): print(i,v)` | Indice + valeur d’une liste |
-| **zip** | `for x,y in zip([1,2],[3,4]): print(x,y)` | Parcourt deux listes en parallèle |
-| **list comprehension** | `[i*i for i in range(5)]` | Crée `[0,1,4,9,16]` |
-| **set comprehension** | `{i for i in range(5) if i%2==0}` | Crée `{0,2,4}` |
-| **dict comprehension** | `{i:i*i for i in range(3)}` | Crée `{0:0,1:1,2:4}` |
+| Type                    | Exemple                                            | Résultat / Utilité                |
+| ----------------------- | -------------------------------------------------- | --------------------------------- |
+| **for + range**         | `for i in range(5): print(i)`                      | Affiche `0 1 2 3 4`               |
+| **for sur liste**       | `for fruit in ["pomme","banane"]: print(fruit)`    | Parcourt une liste d’éléments     |
+| **for sur chaîne**      | `for c in "Python": print(c)`                      | Parcourt chaque caractère         |
+| **for sur dict**        | `for k,v in {"a":1,"b":2}.items(): print(k,v)`     | Parcourt clés et valeurs          |
+| **while**               | `while x < 5: print(x); x+=1`                      | Répète tant que condition vraie   |
+| **break**               | `for i in range(5): if i==3: break`                | Sort de la boucle immédiatement   |
+| **continue**            | `for i in range(5): if i==2: continue; print(i)`   | Ignore l’itération en cours       |
+| **else avec for/while** | `for i in range(3): print(i) else: print("fin")`   | S’exécute si pas de `break`       |
+| **boucles imbriquées**  | `for i in range(2): for j in range(3): print(i,j)` | Boucles dans des boucles          |
+| **enumerate**           | `for i,v in enumerate(["a","b"]): print(i,v)`      | Indice + valeur d’une liste       |
+| **zip**                 | `for x,y in zip([1,2],[3,4]): print(x,y)`          | Parcourt deux listes en parallèle |
+| **list comprehension**  | `[i*i for i in range(5)]`                          | Crée `[0,1,4,9,16]`               |
+| **set comprehension**   | `{i for i in range(5) if i%2==0}`                  | Crée `{0,2,4}`                    |
+| **dict comprehension**  | `{i:i*i for i in range(3)}`                        | Crée `{0:0,1:1,2:4}`              |
 
 ---
 
 ### Alternatives fonctionnelles aux boucles
 
-| Fonction | Exemple | Résultat / Utilité |
-|----------|---------|---------------------|
-| **map** | `list(map(lambda x: x*2, [1,2,3]))` | Applique une fonction → `[2,4,6]` |
-| **filter** | `list(filter(lambda x: x%2==0, [1,2,3,4]))` | Filtre selon condition → `[2,4]` |
-| **reduce** *(dans `functools`)* | `from functools import reduce; reduce(lambda a,b: a+b, [1,2,3,4])` | Réduit une liste → `10` |
-| **any** | `any(x>3 for x in [1,2,3,4])` | Vérifie si **au moins un** élément satisfait → `True` |
-| **all** | `all(x<5 for x in [1,2,3,4])` | Vérifie si **tous** satisfont → `True` |
+| Fonction                        | Exemple                                                            | Résultat / Utilité                                    |
+| ------------------------------- | ------------------------------------------------------------------ | ----------------------------------------------------- |
+| **map**                         | `list(map(lambda x: x*2, [1,2,3]))`                                | Applique une fonction → `[2,4,6]`                     |
+| **filter**                      | `list(filter(lambda x: x%2==0, [1,2,3,4]))`                        | Filtre selon condition → `[2,4]`                      |
+| **reduce** *(dans `functools`)* | `from functools import reduce; reduce(lambda a,b: a+b, [1,2,3,4])` | Réduit une liste → `10`                               |
+| **any**                         | `any(x>3 for x in [1,2,3,4])`                                      | Vérifie si **au moins un** élément satisfait → `True` |
+| **all**                         | `all(x<5 for x in [1,2,3,4])`                                      | Vérifie si **tous** satisfont → `True`                |
 
 ---
 
@@ -1471,10 +1471,10 @@ s[3]  # 'g'
 s[-1] # 'e'
 ```
 On peut aussi utiliser des intervalles (*slices*) pour récupérer les caractères entre deux positions (en excluant la borne supérieure). On les appelle des *sous-chaînes (substrings)*, comme ceci :
-   |F |  u |  d  | g  | e|
-   |:-:|:-:|:-:|:-:|:-:|
-   |0|   1|   2|   3|   4 |
- | -5 | -4 | -3 | -2 | -1  
+   |   F   |   u   |   d   |   g   |   e   |
+   | :---: | :---: | :---: | :---: | :---: |
+   |   0   |   1   |   2   |   3   |   4   |
+   |  -5   |  -4   |  -3   |  -2   |  -1   |
 
 ```
 s = 'Fudge'
@@ -1692,9 +1692,27 @@ print(texte_modifie)
 ```
 
 
+## 2.3 Python - Introduction aux listes
 
+### Méthodes de list
 
-Solution :  
-```
+Tu vas te contenter ici d'exécuter des cellules de codes et expliquer ce qu'il se passe en répondant aux questions à l'écrit.
+Pour ce faire, tu vas devoir t'aider de la documentation que tu peux trouver sur internet.
 
-```
+Comme tu le verras, tu vas devoir trouver des informations sur le fonctionnement de:
+
+- `enumerate**()**`
+- `range()`
+- `.append()`
+- `del`
+- `random.randint`
+- `.insert()`
+- `"".join()`
+- `.split()`
+
+Ces étapes de recherches sont très importantes pour ta progression.
+Une fois que tu seras à l'aise avec les recherches sur internet, tu te rendras compte que tu peux te débloquer tout seul.
+Evidemment, c'est un point qui se travaille, et ton formateur est aussi là pour t'aider.
+Il s'agit en tout cas d'une softskill très redoutable. Plus tu seras à l'aise avec les recherches sur internet, moins tu seras stressé à l'idée d'être bloqué sur une question. Il est très important de développer ça dès le début de la formation. C'est un travail de tous les jours. Notre objectif, tout comme le tien, c'est que tu sois autonome sur ce point avant d'arriver sur le marché de l'emploi.
+
+### Challenge
