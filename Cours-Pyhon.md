@@ -1716,3 +1716,167 @@ Evidemment, c'est un point qui se travaille, et ton formateur est aussi là pour
 Il s'agit en tout cas d'une softskill très redoutable. Plus tu seras à l'aise avec les recherches sur internet, moins tu seras stressé à l'idée d'être bloqué sur une question. Il est très important de développer ça dès le début de la formation. C'est un travail de tous les jours. Notre objectif, tout comme le tien, c'est que tu sois autonome sur ce point avant d'arriver sur le marché de l'emploi.
 
 ### Challenge
+
+https://colab.research.google.com/drive/1J9jeqGemUmv2J6XBpDWAJ0HpYrmGNvg-?usp=sharing
+
+##  2.4 Python - Les listes
+
+Une liste est une suite de variables alignées dans une boite. Il s'agit d'un type de variable très intéressante et très flexible. Tu les rencontreras extrêmement souvent.
+
+🐍 Python Lists
+
+[
+  | 'Alice' | ,
+  | 'Bob'   | ,
+  | 'Carl'  |
+]
+
+| Index: 0 | Index: 1 | Index: 2 |
+
+---
+
+### Les listes
+
+###🐍 LISTS - INDEXING AND SLICING
+
+#### List Slicing
+
+`a[2:5]`
+
+#### List Indices
+
+| 'spam' | 'egg' | **'bacon'** | **'tomato'** | **'ham'** | 'lobster' |
+| :----: | :---: | :---------: | :----------: | :-------: | :-------: |
+|   0    |   1   |      **2** |      **3** |     **4** |     5     |
+
+
+Comme dit plus haut, une liste est une structure de données permettant de regrouper des données dans une boîte.
+
+Comme les string, les listes sont des objets, comme à peu près tout en Python (plus de détails dans une prochaine quête).
+
+💡Contrairement aux strings, les listes sont mutables. Les éléments d'une liste peuvent être modifiés par d'autres éléments, tout en gardant la même `id`.
+
+```
+list_name = ["Léon", "René", "Bernard"]   
+print(id(list_name))  
+
+>>> 140194799193536
+
+list_name[0] = "Babar" 
+print(id(list_name)) 
+
+>>> 140194799193536
+```
+
+Un objet liste permet d'effectuer des actions (méthodes) différentes des objets string (logique, ce n'est pas le même type d'objet).
+
+On peut parcourir une liste, accéder à un élément, modifier un élément à une certaine position, supprimer un élément, effectuer des calculs (par exemple additionner tous les nombres d'une liste)...
+
+En tant que boîte, une liste peut contenir tout ce qu'on veut.
+Elle peut même contenir d'autres listes !
+
+#### 💻 Exemple de Code
+
+```python
+>>> lst_1 = [1, 2, 3]
+>>> lst_2 = [4, 5, 6]
+>>> lst_3 = [7, 8, 9]
+
+# Création de la liste imbriquée
+>>> lst = [lst_1, lst_2, lst_3]
+
+# Résultat
+>>> lst
+[[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+```
+
+En fonction de l'agencement de la liste, elle aura une ou plusieurs dimensions, exactement comme les matrices en mathématiques.
+Bref la liste est très pratique.
+
+Les ressources t'aideront à en apprendre davantage. Après les avoir regardées, passe au challenge ;-)
+
+Comment itérer sur une list ?  
+https://www.geeksforgeeks.org/iterate-over-a-list-in-python/  
+Les listes python - python doctor  
+https://python.doctor/page-apprendre-listes-list-tableaux-tableaux-liste-array-python-cours-debutant  
+Sélectionner les données dans une liste  
+https://railsware.com/blog/python-for-machine-learning-indexing-and-slicing-for-lists-tuples-strings-and-other-sequential-types/  
+Python Lists - W3School  
+https://www.w3schools.com/python/python_lists.asp  
+
+### Challenge
+
+https://colab.research.google.com/drive/19Xn46mnwU9XeOlUDFkCeeG_eud72dTm1?usp=sharing
+
+#### Mission 1
+
+Define a list, then display only the elements (and their position) that have even positions (0, 2, 4, 6...).
+
+With `test_list = ["a", "b", "c", "d", "e"]`, the script should display:
+```
+a at position 0
+c at position 2
+e at position 4
+```
+`test_list = ["a", "b", "c", "d", "e"]`
+Solution :  
+```
+test_list = ["a", "b", "c", "d", "e"]
+
+for i in range(0,5,2):
+    print(test_list[i])
+```
+
+#### Mission 2  
+
+Define a list, then **ask** for an index, followed by a string. Then, replace the list element at that **index** with the given string and display the resulting list.  
+
+For example, with the list `test_list2 = ['hello', 'good morning', 'bye bye', 'have a good day']`, the index `2`, and the string `yeah`, you should display:  
+
+```python
+['hello', 'good morning', 'yeah', 'have a good day']
+```
+
+Solution :  
+```
+
+```
+
+
+
+Solution :  
+```
+
+```
+
+
+
+
+Solution :  
+```
+
+```
+Solution :  
+```
+
+```
+Solution :  
+```
+
+```
+Solution :  
+```
+
+```
+Solution :  
+```
+
+```
+Solution :  
+```
+
+```
+Solution :  
+```
+
+```
