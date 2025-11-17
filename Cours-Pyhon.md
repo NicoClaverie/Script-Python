@@ -1839,6 +1839,13 @@ For example, with the list `test_list2 = ['hello', 'good morning', 'bye bye', 'h
 
 Solution :  
 ```
+test_list2 = ['hello', 'good morning', 'bye bye', 'have a good day']
+test_list = ", ".join(test_list2)
+
+print(test_list)
+NewWord = input("Quel mot il faut ajouter ? ")
+NewIndex = int(input("A quelle position ? "))
+
 
 ```
 
