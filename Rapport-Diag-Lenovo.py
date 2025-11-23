@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-# Rapport-Diag-Ultimate-V11.py
-# Version 11 : Compatible PC Fixe (Gère proprement l'absence de batterie) + Tout le reste.
+# Rapport-Diag-Ultimate-V18.py
+# Version 18 : Correction CRITIQUE de l'extraction Stockage "Legacy".
+# Force la détection du bloc STORAGE immédiat pour éviter de lire tout le fichier (et de confondre avec la RAM).
 
 import re
 import tkinter as tk
@@ -21,29 +22,44 @@ def read_and_clean_log(path):
     return cleaned.decode("latin-1", errors="ignore")
 
 
-# ---------- 2. EXTRACTION MATÉRIEL & DATE ----------
+# ---------- 2. DÉTECTION DE VERSION ----------
 
-def extract_system_info(text):
-    info = {"Model": "Inconnu", "Serial": "Inconnu", "FinalCode": "N/A", "Bios": "", "Date": "Non daté"}
+def get_diag_version(text):
+    m = re.search(r"APPLICATION_VERSION:\s*(?:Version|UEFI)?\s*(\d+)\.", text, re.IGNORECASE)
+    if m:
+        try: return int(m.group(1))
+        except: return 4
+    return 4
+
+
+# ---------- 3. EXTRACTION COMMUNES ----------
+
+def extract_common_info(text):
+    info = {"Model": "Inconnu", "Serial": "Inconnu", "FinalCode": "N/A", "Bios": "", "Date": "Non daté", "AppVer": "?"}
     patterns = {
-        "Model": r"MACHINE_MODEL:\s*(.*)",
-        "Serial": r"SERIAL_NUMBER:\s*(.*)",
+        "Model": r"^MACHINE_MODEL:\s*(.*)",
+        "Serial": r"^SERIAL_NUMBER:\s*(.*)",
         "FinalCode": r"FINAL_RESULT_CODE\s*(.*)",
-        "Bios": r"BIOS_VERSION:\s*(.*)"
+        "Bios": r"^BIOS_VERSION:\s*(.*)",
+        "AppVer": r"^APPLICATION_VERSION:\s*(.*)"
     }
     for key, pat in patterns.items():
-        m = re.search(pat, text)
+        m = re.search(pat, text, re.MULTILINE)
         if m: info[key] = m.group(1).strip()
 
     m_date = re.search(r"(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})UTC", text)
     if m_date:
         y, m, d, H, M, S = m_date.groups()
         info["Date"] = f"{d}/{m}/{y} à {H}:{M}:{S}"
-
     return info
 
 def extract_cpu(text):
     cpu = {"Model": "", "Cores": "", "Threads": "", "MaxSpeed": "", "TempDisplay": "Non dispo", "TempVal": 0}
+    
+    # Isolation section CPU
+    section = re.search(r"\+\+\+.*?CPU.*?(?=STOP TESTS)", text, re.DOTALL)
+    target_text = section.group(0) if section else text
+
     patterns = {
         "Model": r"CPU[_\s]*MODEL:\s*(.*)",
         "Cores": r"CPU[_\s]*CORES:\s*(\d+)",
@@ -51,29 +67,27 @@ def extract_cpu(text):
         "MaxSpeed": r"CPU[_\s]*MAX[_\s]*SPEED:\s*([0-9\.]+\s*GHz)"
     }
     for key, pat in patterns.items():
-        m = re.search(pat, text, re.IGNORECASE)
+        m = re.search(pat, target_text, re.IGNORECASE)
         if m: cpu[key] = m.group(1).strip()
 
     m_temp = re.search(r"CPU_TEMPERATURE:\s*(\d+)\s*[CF]", text, re.IGNORECASE)
     if m_temp:
-        try:
-            val = int(m_temp.group(1))
-            cpu['TempVal'] = val
-            cpu['TempDisplay'] = f"{val} °C"
-        except ValueError:
-            pass
+        val = int(m_temp.group(1))
+        cpu['TempVal'] = val
+        cpu['TempDisplay'] = f"{val} °C"
     return cpu
 
-def extract_ram_detail(text):
+
+# ---------- 4. MOTEUR V4 (MODERNE) ----------
+
+def extract_ram_modern(text):
     ram = {"Total": "Inconnu", "Sticks": []}
     m_total = re.search(r"TOTAL_PHYSICAL_MEMORY:\s*(\d+\s*MB)", text)
-    if m_total:
-        ram["Total"] = m_total.group(1)
+    if m_total: ram["Total"] = m_total.group(1)
 
     section_match = re.search(r"MEMORY QUICK DIAGNOSTIC.*?(?=START TESTS)", text, re.DOTALL)
     if section_match:
-        section_text = section_match.group(0)
-        blocks = section_text.split("ORIGIN: SMBIOS")[1:]
+        blocks = section_match.group(0).split("ORIGIN: SMBIOS")[1:]
         for block in blocks:
             stick = {}
             def get(pat, txt):
@@ -86,43 +100,92 @@ def extract_ram_detail(text):
             speed = get(r"MEMORY_CURRENT_SPEED:\s*(.*)", block)
             if speed == "?": speed = get(r"MEMORY_SPEED:\s*(.*)", block)
             stick['Speed'] = speed
-
             if stick['Size'] != "?": ram["Sticks"].append(stick)
     return ram
 
-def extract_storage(text):
-    storage = {
-        "Type": "", "Size": "", "Hours": "", "Model": "", 
-        "PercentUsed": "", "PowerCycles": ""
-    }
+def extract_storage_modern(text):
+    storage = {"Type": "", "Size": "", "Hours": "N/A", "Model": "", "PercentUsed": "N/A", "PowerCycles": "N/A"}
     
-    section_match = re.search(r"STORAGE\s+(?:QUICK|EXTENDED)\s+DIAGNOSTIC.*?(?=START TESTS)", text, re.DOTALL | re.IGNORECASE)
-    target_text = section_match.group(0) if section_match else text 
-
+    match = re.search(r"STORAGE\s+(?:QUICK|EXTENDED)\s+DIAGNOSTIC.*?(?=START TESTS)", text, re.DOTALL | re.IGNORECASE)
+    if not match: return storage
+    
+    target_text = match.group(0)
     patterns = {
-        "Type": r"DEVICE[_\s]*TYPE:\s*(.*)",
-        "Size": r"INFORMATION[_\s]*SIZE:\s*(.*)",
-        "Model": r"MODEL[_\s]*NUMBER:\s*(.*)",
+        "Type": r"DEVICE_TYPE:\s*(.*)",
+        "Size": r"INFORMATION_SIZE:\s*(.*)",
+        "Model": r"MODEL_NUMBER:\s*(.*)",
         "PowerCycles": r"Power\s*Cycles\s+(\d+)",
         "PercentUsed": r"Percentage\s*Used\s+(\d+)"
     }
-    
     for key, pat in patterns.items():
         m = re.search(pat, target_text, re.IGNORECASE)
         if m: storage[key] = m.group(1).strip()
 
     m_hours = re.search(r"Power\s*On\s*Hours\s+(\d+)", target_text, re.IGNORECASE)
     if not m_hours:
-        m_hours = re.search(r"^\s*\d+\s+Power\s+On\s+Hours\s+(\d+)", target_text, re.IGNORECASE | re.MULTILINE)
-    
+         m_hours = re.search(r"^\s*\d+\s+Power\s+On\s+Hours\s+(\d+)", target_text, re.IGNORECASE | re.MULTILINE)
     if m_hours: storage["Hours"] = m_hours.group(1)
-
     return storage
+
+
+# ---------- 5. MOTEUR V2 (LEGACY - FIXÉ) ----------
+
+def extract_ram_legacy(text):
+    ram = {"Total": "Inconnu", "Sticks": []}
+    m_total = re.search(r"PHYSICAL_MEMORY:\s*([\d\.]+\s*[GM]B)", text)
+    if m_total: ram["Total"] = m_total.group(1)
+
+    section_match = re.search(r"\+\+\+.*?MEMORY.*?(?=STOP TESTS)", text, re.DOTALL)
+    if section_match:
+        blocks = section_match.group(0).split("RESOURCE BANK")[1:]
+        for block in blocks:
+            if "INDEX:" not in block: continue
+            stick = {}
+            def get(pat, txt):
+                m = re.search(pat, txt, re.MULTILINE)
+                return m.group(1).strip() if m else "?"
+            stick['Size'] = get(r"^SIZE:\s*(.*)", block)
+            stick['Type'] = "DDR3/Unknown"
+            stick['Manu'] = get(r"^MANUFACTURER:\s*(.*)", block)
+            stick['Part'] = get(r"^PART_NUMBER:\s*(.*)", block)
+            stick['Speed'] = get(r"^SPEED:\s*(.*)", block)
+            if stick['Size'] != "?": ram["Sticks"].append(stick)
+    return ram
+
+def extract_storage_legacy(text):
+    """
+    Correction V18 : Regex STRICTE pour le timestamp STORAGE.
+    On ne permet plus de '.*?' entre la date et le mot STORAGE.
+    """
+    storage = {"Type": "", "Size": "", "Hours": "N/A", "Model": "", "PercentUsed": "N/A", "PowerCycles": "N/A"}
+    
+    # Regex V18 : Le mot STORAGE doit suivre IMMÉDIATEMENT l'heure UTC (ex: +++ 2025...UTC STORAGE)
+    # Cela empêche de matcher le début du fichier et de tout avaler jusqu'à la fin.
+    match = re.search(r"(\+\+\+\s+\d+T\d+UTC\s+STORAGE.*?)STOP TESTS", text, re.DOTALL | re.IGNORECASE)
+    
+    if not match: return storage
+    
+    target_text = match.group(1)
+    
+    # On utilise ^ pour matcher le début de ligne DANS le bloc ciblé
+    patterns = {
+        "Type": r"^TYPE:\s*(.*)",
+        "Size": r"^SIZE:\s*(.*)",
+        "Model": r"^MODEL:\s*(.*)",
+    }
+    for key, pat in patterns.items():
+        m = re.search(pat, target_text, re.MULTILINE | re.IGNORECASE)
+        if m: storage[key] = m.group(1).strip()
+    
+    storage["Hours"] = "N/A (Vieux Log)"
+    return storage
+
+
+# ---------- 6. FONCTIONS COMMUNES ----------
 
 def extract_battery(text):
     batt = {"Health": "N/A", "Cycles": "N/A", "Design": 0, "Full": 0, "Found": False}
-    
-    section_match = re.search(r"BATTERY (?:QUICK|EXTENDED) DIAGNOSTIC.*?(?=START TESTS)", text, re.DOTALL)
+    section_match = re.search(r"BATTERY (?:QUICK|EXTENDED)?\s*DIAGNOSTIC.*?(?=START TESTS)", text, re.DOTALL)
     if section_match:
         batt["Found"] = True
         block = section_match.group(0)
@@ -142,12 +205,9 @@ def extract_battery(text):
                 if d > 0:
                     pct = (f / d) * 100
                     batt["Health"] = f"{pct:.1f}%"
-            except:
-                pass
+            except: pass
     return batt
 
-
-# ---------- 3. ANALYSE SANTÉ ----------
 def extract_test_results(text):
     lines = text.splitlines()
     diagnostics = []
@@ -162,7 +222,9 @@ def extract_test_results(text):
         line = line.strip()
         m_start = rx_diag_start.search(line)
         if m_start:
-            current_diag = m_start.group(1).strip()
+            raw_name = m_start.group(1).strip()
+            # On nettoie l'ID à la fin
+            current_diag = re.sub(r"\s+\d+$", "", raw_name)
             diagnostics.append({"name": current_diag, "status": "SUCCESS"})
 
         if current_diag:
@@ -176,31 +238,27 @@ def extract_test_results(text):
     return diagnostics, failures
 
 
-# ---------- 4. FORMATAGE RAPPORT ----------
+# ---------- 7. FORMATAGE RAPPORT ----------
 def build_full_report(sys_info, cpu, ram, storage, battery, diagnostics, failures):
     lines = []
     lines.append("="*60)
     lines.append(f" RAPPORT DIAGNOSTIC : {sys_info.get('Model')}")
     lines.append("="*60)
+    lines.append(f"Version App     : {sys_info.get('AppVer')}")
     lines.append(f"Date du test    : {sys_info.get('Date')}")
     lines.append(f"Numéro de Série : {sys_info.get('Serial')}")
     lines.append(f"Code Résultat   : {sys_info.get('FinalCode')}")
-    lines.append(f"Version BIOS    : {sys_info.get('Bios')}")
     lines.append("")
 
-    # --- MATÉRIEL ---
     lines.append("-" * 25 + " MATÉRIEL " + "-" * 25)
     
     # CPU
     temp_val = cpu.get('TempVal', 0)
     temp_str = cpu.get('TempDisplay', 'N/A')
     SEUIL_CHAUD = 85 
-    if temp_val > SEUIL_CHAUD:
-        temp_line = f"{temp_str}  ⚠️ SURCHAUFFE (> {SEUIL_CHAUD}°C) !"
-    elif temp_val > 0:
-        temp_line = f"{temp_str}  (Normal) ✅"
-    else:
-        temp_line = "Non disponible"
+    if temp_val > SEUIL_CHAUD: temp_line = f"{temp_str}  ⚠️ SURCHAUFFE (> {SEUIL_CHAUD}°C) !"
+    elif temp_val > 0: temp_line = f"{temp_str}  (Normal) ✅"
+    else: temp_line = "Non disponible (Sonde absente ou vieux log)"
 
     lines.append("[CPU] Processeur :")
     lines.append(f"  - Modèle       : {cpu.get('Model','')}")
@@ -214,7 +272,10 @@ def build_full_report(sys_info, cpu, ram, storage, battery, diagnostics, failure
     lines.append(f"  - Total        : {ram.get('Total', 'Inconnu')}")
     if ram.get("Sticks"):
         for i, stick in enumerate(ram["Sticks"]):
-            lines.append(f"  - Slot {i+1:<9} : {stick['Size']} - {stick['Type']} - {stick['Manu']} - {stick['Part']} - {stick['Speed']}")
+            type_str = stick.get('Type', '?')
+            manu_str = stick.get('Manu', '?')
+            if "0000" in manu_str: manu_str = "Générique/Inconnu"
+            lines.append(f"  - Slot {i+1:<9} : {stick['Size']} - {type_str} - {manu_str} - {stick['Part']} - {stick['Speed']}")
     else:
         lines.append("  - Détail       : Non détecté")
     lines.append("")
@@ -224,14 +285,12 @@ def build_full_report(sys_info, cpu, ram, storage, battery, diagnostics, failure
     lines.append(f"  - Modèle       : {storage.get('Model','')}")
     lines.append(f"  - Type         : {storage.get('Type','')}")
     lines.append(f"  - Capacité     : {storage.get('Size','')}")
-    lines.append(f"  - Heures (POH) : {storage.get('Hours','?')} h")
-    lines.append(f"  - Cycles       : {storage.get('PowerCycles','')}")
+    lines.append(f"  - Heures (POH) : {storage.get('Hours','N/A')}")
+    lines.append(f"  - Cycles       : {storage.get('PowerCycles','N/A')}")
     lines.append("")
 
-    # --- RÉSULTATS TESTS & USURE ---
     lines.append("-" * 25 + " RÉSULTATS & SANTÉ " + "-" * 25)
     
-    # 1. Verdict Global
     if failures:
         lines.append("⚠️  VERDICT : ÉCHECS DÉTECTÉS")
         for fail in failures:
@@ -240,42 +299,43 @@ def build_full_report(sys_info, cpu, ram, storage, battery, diagnostics, failure
         lines.append("✅  VERDICT : TOUS LES TESTS ONT RÉUSSI")
     lines.append("")
 
-    # 2. Indicateurs d'Usure
     lines.append("📊  ÉTAT DE SANTÉ / USURE :")
     
-    # LOGIQUE AFFICHAGE BATTERIE INTELLIGENTE
+    # Batterie
     if battery.get("Found"):
         batt_health = battery.get("Health", "N/A")
         batt_cycles = battery.get("Cycles", "N/A")
         lines.append(f"  - Batterie     : Santé {batt_health} ({batt_cycles} cycles)")
     else:
-        lines.append(f"  - Batterie     : Non détectée / PC Fixe")
+        lines.append(f"  - Batterie     : Non détectée / PC Fixe / Vieux Log")
     
-    # Stockage
-    hours_str = storage.get('Hours','0')
-    cycles_str = storage.get('PowerCycles','0')
-    percent_used = storage.get('PercentUsed', '?')
+    # Stockage (Profil Usage)
+    hours_str = storage.get('Hours','N/A')
+    cycles_str = storage.get('PowerCycles','N/A')
+    percent_used = storage.get('PercentUsed', 'N/A')
     
-    try:
-        h = int(hours_str)
-        c = int(cycles_str)
-        if c > 0:
-            ratio = h / c
-            if ratio < 1.0:
-                status = "⚠️ Instable / Haché"
-            elif ratio < 10.0:
-                status = "✅ Standard"
+    if hours_str != "N/A" and cycles_str != "N/A" and "Vieux" not in hours_str:
+        try:
+            h = int(hours_str)
+            c = int(cycles_str)
+            if c > 0:
+                ratio = h / c
+                if ratio < 1.0: status = "⚠️ Instable / Haché"
+                elif ratio < 10.0: status = "✅ Standard"
+                else: status = "⚡ Intensif"
+                lines.append(f"  - Disque       : Usure {percent_used}% (Profil : {ratio:.1f} h/sess -> {status})")
             else:
-                status = "⚡ Intensif"
-            lines.append(f"  - Disque       : Usure {percent_used}% (Profil : {ratio:.1f} h/sess -> {status})")
-        else:
+                lines.append(f"  - Disque       : Usure {percent_used}%")
+        except:
             lines.append(f"  - Disque       : Usure {percent_used}%")
-    except:
-        lines.append(f"  - Disque       : Usure {percent_used}%")
+    else:
+        if "Vieux" in hours_str:
+             lines.append(f"  - Disque       : Données SMART non disponibles (Vieux Log)")
+        else:
+             lines.append(f"  - Disque       : Données SMART non disponibles")
 
     lines.append("")
     
-    # 3. Liste Modules
     lines.append("Détail des modules exécutés :")
     for diag in diagnostics:
         icon = "✅" if diag["status"] == "SUCCESS" else "❌"
@@ -284,11 +344,11 @@ def build_full_report(sys_info, cpu, ram, storage, battery, diagnostics, failure
     return "\n".join(lines)
 
 
-# ---------- 5. UI TKINTER ----------
+# ---------- 8. UI TKINTER ----------
 class App:
     def __init__(self, root):
         self.root = root
-        root.title("Rapport Diag Ultimate V11 (Universelle)")
+        root.title("Rapport Diag Ultimate V18 (Fix Legacy)")
         root.geometry("950x750")
 
         frame = tk.Frame(root)
@@ -306,18 +366,26 @@ class App:
         if not path: return
         
         self.text.delete("1.0", tk.END)
-        self.text.insert(tk.END, "Analyse...")
+        self.text.insert(tk.END, "Lecture et détection de version...\n")
         self.root.update()
 
         try:
             txt = read_and_clean_log(path)
             
-            info = extract_system_info(txt)
+            ver = get_diag_version(txt)
+            self.text.insert(tk.END, f"-> Version Détectée : Génération {ver}\n")
+            
+            info = extract_common_info(txt)
             cpu = extract_cpu(txt)
-            ram = extract_ram_detail(txt)
-            hdd = extract_storage(txt)
             batt = extract_battery(txt)
             diags, fails = extract_test_results(txt)
+
+            if ver >= 4:
+                ram = extract_ram_modern(txt)
+                hdd = extract_storage_modern(txt)
+            else:
+                ram = extract_ram_legacy(txt)
+                hdd = extract_storage_legacy(txt)
 
             rep = build_full_report(info, cpu, ram, hdd, batt, diags, fails)
             self.current_report = rep
@@ -332,7 +400,7 @@ class App:
             if alerts:
                 messagebox.showwarning("Attention", " / ".join(alerts))
             else:
-                messagebox.showinfo("Succès", "Machine saine (Aucune alerte critique).")
+                messagebox.showinfo("Succès", "Analyse Terminée.")
 
         except Exception as e:
             messagebox.showerror("Erreur", str(e))
