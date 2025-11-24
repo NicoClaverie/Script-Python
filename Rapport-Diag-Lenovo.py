@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-# Rapport-Diag-Ultimate-V18.py
-# Version 18 : Correction CRITIQUE de l'extraction Stockage "Legacy".
-# Force la détection du bloc STORAGE immédiat pour éviter de lire tout le fichier (et de confondre avec la RAM).
+# Rapport-Diag-Ultimate-V19.py
+# Version 19 : Ajout du bouton IMPRIMER (Envoie vers l'imprimante par défaut de Windows).
 
 import re
+import os
+import sys
+import tempfile
 import tkinter as tk
 from tkinter import filedialog, messagebox, scrolledtext
 
@@ -56,7 +58,6 @@ def extract_common_info(text):
 def extract_cpu(text):
     cpu = {"Model": "", "Cores": "", "Threads": "", "MaxSpeed": "", "TempDisplay": "Non dispo", "TempVal": 0}
     
-    # Isolation section CPU
     section = re.search(r"\+\+\+.*?CPU.*?(?=STOP TESTS)", text, re.DOTALL)
     target_text = section.group(0) if section else text
 
@@ -128,7 +129,7 @@ def extract_storage_modern(text):
     return storage
 
 
-# ---------- 5. MOTEUR V2 (LEGACY - FIXÉ) ----------
+# ---------- 5. MOTEUR V2 (LEGACY) ----------
 
 def extract_ram_legacy(text):
     ram = {"Total": "Inconnu", "Sticks": []}
@@ -153,21 +154,12 @@ def extract_ram_legacy(text):
     return ram
 
 def extract_storage_legacy(text):
-    """
-    Correction V18 : Regex STRICTE pour le timestamp STORAGE.
-    On ne permet plus de '.*?' entre la date et le mot STORAGE.
-    """
     storage = {"Type": "", "Size": "", "Hours": "N/A", "Model": "", "PercentUsed": "N/A", "PowerCycles": "N/A"}
     
-    # Regex V18 : Le mot STORAGE doit suivre IMMÉDIATEMENT l'heure UTC (ex: +++ 2025...UTC STORAGE)
-    # Cela empêche de matcher le début du fichier et de tout avaler jusqu'à la fin.
     match = re.search(r"(\+\+\+\s+\d+T\d+UTC\s+STORAGE.*?)STOP TESTS", text, re.DOTALL | re.IGNORECASE)
-    
     if not match: return storage
     
     target_text = match.group(1)
-    
-    # On utilise ^ pour matcher le début de ligne DANS le bloc ciblé
     patterns = {
         "Type": r"^TYPE:\s*(.*)",
         "Size": r"^SIZE:\s*(.*)",
@@ -223,7 +215,6 @@ def extract_test_results(text):
         m_start = rx_diag_start.search(line)
         if m_start:
             raw_name = m_start.group(1).strip()
-            # On nettoie l'ID à la fin
             current_diag = re.sub(r"\s+\d+$", "", raw_name)
             diagnostics.append({"name": current_diag, "status": "SUCCESS"})
 
@@ -252,7 +243,6 @@ def build_full_report(sys_info, cpu, ram, storage, battery, diagnostics, failure
 
     lines.append("-" * 25 + " MATÉRIEL " + "-" * 25)
     
-    # CPU
     temp_val = cpu.get('TempVal', 0)
     temp_str = cpu.get('TempDisplay', 'N/A')
     SEUIL_CHAUD = 85 
@@ -267,7 +257,6 @@ def build_full_report(sys_info, cpu, ram, storage, battery, diagnostics, failure
     lines.append(f"  - Température  : {temp_line}") 
     lines.append("")
     
-    # RAM
     lines.append("[RAM] Mémoire Vive :")
     lines.append(f"  - Total        : {ram.get('Total', 'Inconnu')}")
     if ram.get("Sticks"):
@@ -280,7 +269,6 @@ def build_full_report(sys_info, cpu, ram, storage, battery, diagnostics, failure
         lines.append("  - Détail       : Non détecté")
     lines.append("")
 
-    # STOCKAGE
     lines.append("[HDD/SSD] Stockage :")
     lines.append(f"  - Modèle       : {storage.get('Model','')}")
     lines.append(f"  - Type         : {storage.get('Type','')}")
@@ -301,7 +289,6 @@ def build_full_report(sys_info, cpu, ram, storage, battery, diagnostics, failure
 
     lines.append("📊  ÉTAT DE SANTÉ / USURE :")
     
-    # Batterie
     if battery.get("Found"):
         batt_health = battery.get("Health", "N/A")
         batt_cycles = battery.get("Cycles", "N/A")
@@ -309,7 +296,6 @@ def build_full_report(sys_info, cpu, ram, storage, battery, diagnostics, failure
     else:
         lines.append(f"  - Batterie     : Non détectée / PC Fixe / Vieux Log")
     
-    # Stockage (Profil Usage)
     hours_str = storage.get('Hours','N/A')
     cycles_str = storage.get('PowerCycles','N/A')
     percent_used = storage.get('PercentUsed', 'N/A')
@@ -335,7 +321,6 @@ def build_full_report(sys_info, cpu, ram, storage, battery, diagnostics, failure
              lines.append(f"  - Disque       : Données SMART non disponibles")
 
     lines.append("")
-    
     lines.append("Détail des modules exécutés :")
     for diag in diagnostics:
         icon = "✅" if diag["status"] == "SUCCESS" else "❌"
@@ -348,14 +333,21 @@ def build_full_report(sys_info, cpu, ram, storage, battery, diagnostics, failure
 class App:
     def __init__(self, root):
         self.root = root
-        root.title("Rapport Diag Ultimate V18 (Fix Legacy)")
+        root.title("Rapport Diag Ultimate V19 (Impression)")
         root.geometry("950x750")
 
         frame = tk.Frame(root)
         frame.pack(fill=tk.X, padx=10, pady=10)
         
-        tk.Button(frame, text="📂 Ouvrir Log", command=self.open_log, bg="#e1e1e1", font=("Arial", 10, "bold")).pack(side=tk.LEFT, padx=5)
-        tk.Button(frame, text="💾 Sauvegarder", command=self.save_summary).pack(side=tk.LEFT, padx=5)
+        btn_open = tk.Button(frame, text="📂 Ouvrir Log", command=self.open_log, bg="#e1e1e1", font=("Arial", 10, "bold"))
+        btn_open.pack(side=tk.LEFT, padx=5)
+        
+        btn_save = tk.Button(frame, text="💾 Sauvegarder", command=self.save_summary, font=("Arial", 10))
+        btn_save.pack(side=tk.LEFT, padx=5)
+
+        # BOUTON IMPRIMER AJOUTÉ ICI
+        btn_print = tk.Button(frame, text="🖨️ Imprimer", command=self.print_summary, font=("Arial", 10), bg="#d1e7dd")
+        btn_print.pack(side=tk.LEFT, padx=5)
 
         self.text = scrolledtext.ScrolledText(root, wrap=tk.WORD, font=("Consolas", 10))
         self.text.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
@@ -411,6 +403,34 @@ class App:
         if p:
             with open(p, "w", encoding="utf-8") as f: f.write(self.current_report)
             messagebox.showinfo("Info", "Fichier enregistré.")
+
+    def print_summary(self):
+        """Imprime le rapport via l'imprimante par défaut du système (Windows)."""
+        if not self.current_report:
+            messagebox.showwarning("Vide", "Aucun rapport à imprimer.")
+            return
+
+        # Création d'un fichier temporaire
+        try:
+            temp_file = tempfile.mktemp(".txt")
+            with open(temp_file, "w", encoding="utf-8") as f:
+                f.write(self.current_report)
+            
+            # Commande d'impression Windows
+            if sys.platform == "win32":
+                os.startfile(temp_file, "print")
+            else:
+                # Fallback Linux/Mac (Ouvre le fichier seulement)
+                try:
+                    import subprocess
+                    if sys.platform == "darwin": subprocess.call(["open", temp_file])
+                    else: subprocess.call(["xdg-open", temp_file])
+                    messagebox.showinfo("Impression", "Fichier ouvert. Veuillez imprimer depuis l'éditeur.")
+                except:
+                    messagebox.showerror("Erreur", "Impression non supportée sur cet OS.")
+
+        except Exception as e:
+            messagebox.showerror("Erreur Impression", f"Impossible d'imprimer : {e}")
 
 if __name__ == "__main__":
     root = tk.Tk()
