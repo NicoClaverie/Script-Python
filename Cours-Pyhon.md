@@ -1846,9 +1846,22 @@ print(test_list)
 NewWord = input("Quel mot il faut ajouter ? ")
 NewIndex = int(input("A quelle position ? "))
 
+# Instruction pour remplacer un élément dans la liste en fonction de sa position
+test_list2[NewIndex] = NewWord
+FinaleList = ", ".join(test_list2)
 
+
+print(FinaleList)
 ```
 
+#### Mission 3
+
+Define a list with five numbers, then ask the user for a number. Put the number at the end of the list, remove the first element from the list, and finally display the list.
+
+For example, with the list `test_list3 = [1, 9, 6, 15, 4]` and the input `7`, you should display:
+```
+[9, 6, 15, 4, 7]
+```
 
 
 Solution :  
