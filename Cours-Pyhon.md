@@ -1866,9 +1866,33 @@ For example, with the list `test_list3 = [1, 9, 6, 15, 4]` and the input `7`, yo
 
 Solution :  
 ```
+test_list3 = [1, 9, 6, 15, 4]
+print(test_list3)
 
+# Demande quel chiffre ajouter et le met en entier
+NewNumber = int(input("Nombre a ajouter :"))
+
+# Ajoute le chiffre voulu a la fin de la liste
+test_list3.append(NewNumber)
+
+# Retire le chiffre en position 0
+test_list3.pop(0)
+
+print(test_list3)
 ```
 
+#### Mission 4
+
+Define a list, then ask the user for a string. Then, insert the string in the list at a random position, and display the resulting list.
+
+For example, with the list `test_list4 = ["p", "y", "t", "h", "o"]` and the input `n`, you *might* get:
+```
+["p", "n", "y", "t", "h", "o"]
+```
+... but you might also get:
+```
+["p", "y", "t", "n", "h", "o"]
+```
 
 
 
