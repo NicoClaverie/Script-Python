@@ -1894,20 +1894,100 @@ For example, with the list `test_list4 = ["p", "y", "t", "h", "o"]` and the inpu
 ["p", "y", "t", "n", "h", "o"]
 ```
 
+Solution :  
+```
+# Importation du module random pour le coté aléatoire
+import random
 
+# Création de la liste
+test_list4 = ["p", "y", "t", "h", "o"]
+
+# Affichage de la liste pour comparaison
+print (test_list4)
+
+# Demande de la lettre a substitiuer 
+NewLetter = input("Quel lettre ?")
+
+# Utilisation du module random pour selectionner aléatoirement un élément de la liste
+element = random.choice(test_list4)
+
+# Récupération de l'index correspondant a l'élément selectionné
+index = test_list4.index(element)
+
+# Remplacement de la lettre par celle demandé précédemment
+test_list4[index] = NewLetter
+
+# Affichage de la liste finale
+print (test_list4)
+
+```
+
+#### Mission 5
+
+Create a list of integers. Then, display a list with the elements ordered from smallest to largest, using the right built-in function.
+
+With the list `test_list5 = [3, 4, 0, -1, 35, 7]`, this will display:
+```
+[-1, 0, 3, 4, 7, 35]
+```
 
 Solution :  
 ```
+test_list5 = [3, 4, 0, -1, 35, 7]
 
+# Utilisation de la méthode .sort pour trier les chiffres dans l'ordre
+test_list5.sort()
+
+print(test_list5)
 ```
+
+#### Mission 6
+
+Ask the user for a string, convert it to a list of characters with the `list` function, then ask for a single character.
+
+Remove the first occurrence of the character from the list, then display how many occurrences of the character remain in the list.
+
+For instance if you enter `"Excellent work"` then the letter `"e"`, it will display:
+```
+There are still 2 copies of e in the list
+```
+
 Solution :  
 ```
+# phrase a analyser
+Phrase = input("Quelle est la phrase :")
 
-```
-Solution :  
+# Mise en liste de la phrase
+Liste = list(Phrase)
+
+# Selection de la premiere lettre de la phrase dans la liste
+First = Liste[0]
+
+# Retrait de la premiere occurence de la lettre séléctionné
+Liste.remove(First)
+
+# Compte des lettres restantes après la suppression
+Nb = Liste.count(First)
+
+# Affichage finale 
+print(f"There are still {Nb} copies of {First} in the list")
 ```
 
+#### Mission 7
+
+Define three lists containing no duplicates. Then, indicate (however you like) the two that have the most elements in common (or all three if there's a tie).
+
+For instance, with:
 ```
+list_a = [1, 2, 4, 8, 16, 32]
+list_b = [1, 2, 3, 5, 8, 13]
+list_c = [2, 3, 5, 7, 11, 13]
+```
+It may display:
+```
+Lists B and C have the most common elements!
+```
+
 Solution :  
 ```
 
