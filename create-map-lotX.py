@@ -186,7 +186,7 @@ def create_map_from_csv(csv_path, output_path):
                 container.innerHTML = '';
 
                 const SiteNames = Object.keys(Sites_map);
-                SiteNames.sort();
+                siteNames.sort((a, b) => a.localeCompare(b, 'fr', {sensitivity: 'base'})); // Tri alphabétique français
 
                 SiteNames.forEach(SiteName => {{
                     const isChecked = SiteStates[SiteName] || false;
