@@ -5,8 +5,8 @@ from geopy.extra.rate_limiter import RateLimiter
 import time
 
 # --- Configuration ---
-CSV_INPUT_FILE = r'C:\\Users\\CLAVERIE\\Documents\\Script-Python\\ressource\\match pour HTML.csv'
-HTML_OUTPUT_FILE = r'C:\\Users\\CLAVERIE\\Documents\\Script-Python\\ressource\\carte_interactive_lot3.html'
+CSV_INPUT_FILE = r'T:\\Git clone\\Python\\Script-Python\\ressource\\match pour HTML.csv'
+HTML_OUTPUT_FILE = r'T:\\Git clone\\Python\\Script-Python\\ressource\\carte_interactive_lot3.html'
 # -------------------
 
 def create_map_from_csv(csv_path, output_path):
@@ -186,7 +186,7 @@ def create_map_from_csv(csv_path, output_path):
                 container.innerHTML = '';
 
                 const SiteNames = Object.keys(Sites_map);
-                siteNames.sort((a, b) => a.localeCompare(b, 'fr', {sensitivity: 'base'})); // Tri alphabétique français
+                SiteNames.sort();
 
                 SiteNames.forEach(SiteName => {{
                     const isChecked = SiteStates[SiteName] || false;
