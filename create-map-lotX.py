@@ -5,8 +5,8 @@ from geopy.extra.rate_limiter import RateLimiter
 import time
 
 # --- Configuration ---
-CSV_INPUT_FILE = r'C:\Users\Nico\Documents\test\lot2-1.csv'
-HTML_OUTPUT_FILE = r'carte_interactive.html'
+CSV_INPUT_FILE = r'C:\\Users\\CLAVERIE\\Documents\\Script-Python\\ressource\\match pour HTML.csv'
+HTML_OUTPUT_FILE = r'C:\\Users\\CLAVERIE\\Documents\\Script-Python\\ressource\\carte_interactive_lot3.html'
 # -------------------
 
 def create_map_from_csv(csv_path, output_path):
@@ -28,21 +28,21 @@ def create_map_from_csv(csv_path, output_path):
         df[col] = df[col].str.replace('\r\n', ' ', regex=False).str.replace('\n', ' ', regex=False).str.strip()
 
     # S'assurer que les colonnes essentielles ne sont pas vides
-    df.dropna(subset=['site', 'LIBELLE'], inplace=True)
+    df.dropna(subset=['Site', 'LIBELLE'], inplace=True)
     
-    print("Regroupement des données par site...")
-    site_counts = df['site'].value_counts().reset_index()
-    site_counts.columns = ['site', 'total_count']
+    print("Regroupement des données par Site...")
+    Site_counts = df['Site'].value_counts().reset_index()
+    Site_counts.columns = ['Site', 'total_count']
 
     # ==================== CORRECTIF FINAL ====================
     # Remplacement de la méthode groupby() qui posait problème par une boucle manuelle plus robuste
     
     print("Construction du dictionnaire des équipements...")
     tooltip_data = {}
-    for site in df['site'].unique():
-        # Pour chaque site, on filtre le dataframe, on compte les LIBELLE et on stocke le résultat
-        counts_dict = df[df['site'] == site]['LIBELLE'].value_counts().to_dict()
-        tooltip_data[site] = counts_dict
+    for Site in df['Site'].unique():
+        # Pour chaque Site, on filtre le dataframe, on compte les LIBELLE et on stocke le résultat
+        counts_dict = df[df['Site'] == Site]['LIBELLE'].value_counts().to_dict()
+        tooltip_data[Site] = counts_dict
     
     # =========================================================
 
@@ -51,38 +51,38 @@ def create_map_from_csv(csv_path, output_path):
     geocode = RateLimiter(geolocator.geocode, min_delay_seconds=1)
 
     locations = {}
-    for site in site_counts['site']:
+    for Site in Site_counts['Site']:
         try:
-            location = geocode(f"{site}, France")
+            location = geocode(f"{Site}, France")
             if location:
-                locations[site] = (location.latitude, location.longitude)
-                print(f"  - Coordonnées trouvées pour : {site}")
+                locations[Site] = (location.latitude, location.longitude)
+                print(f"  - Coordonnées trouvées pour : {Site}")
             else:
-                locations[site] = None
-                print(f"  - ATTENTION : Coordonnées non trouvées pour : {site}")
+                locations[Site] = None
+                print(f"  - ATTENTION : Coordonnées non trouvées pour : {Site}")
         except Exception as e:
-            print(f"  - ERREUR de géocodage pour {site}: {e}")
-            locations[site] = None
+            print(f"  - ERREUR de géocodage pour {Site}: {e}")
+            locations[Site] = None
             
-    site_counts['coords'] = site_counts['site'].map(locations)
-    site_counts.dropna(subset=['coords'], inplace=True)
+    Site_counts['coords'] = Site_counts['Site'].map(locations)
+    Site_counts.dropna(subset=['coords'], inplace=True)
 
-    if site_counts.empty:
+    if Site_counts.empty:
         print("Aucune coordonnée valide n'a été trouvée. Impossible de créer la carte.")
         return
 
     print("Création de la carte Folium...")
-    map_center = site_counts['coords'].apply(pd.Series).mean().tolist()
+    map_center = Site_counts['coords'].apply(pd.Series).mean().tolist()
     m = folium.Map(location=map_center, zoom_start=8)
 
-    js_sites_array = []
-    for _, row in site_counts.iterrows():
-        site_name = row['site']
+    js_Sites_array = []
+    for _, row in Site_counts.iterrows():
+        Site_name = row['Site']
         total_count = row['total_count']
         coords = row['coords']
 
-        tooltip_html = f"<b>&Eacute;quipement pour {site_name} :</b><br><ul>"
-        details = tooltip_data.get(site_name, {})
+        tooltip_html = f"<b>&Eacute;quipement pour {Site_name} :</b><br><ul>"
+        details = tooltip_data.get(Site_name, {})
         sorted_details = sorted(details.items(), key=lambda item: item[1], reverse=True)
         for libelle, count in sorted_details:
             tooltip_html += f"<li>{libelle}: {count}</li>"
@@ -98,14 +98,14 @@ def create_map_from_csv(csv_path, output_path):
             tooltip=tooltip_html
         ).add_to(m)
 
-        label_html = f'<div style="font-size:12px; color:black; font-weight:bold">{site_name} ({total_count})</div>'
+        label_html = f'<div style="font-size:12px; color:black; font-weight:bold">{Site_name} ({total_count})</div>'
         marker = folium.Marker(
             location=coords,
             icon=folium.DivIcon(html=label_html, icon_size=(150, 36), icon_anchor=(-10, 10))
         ).add_to(m)
 
-        js_sites_array.append({
-            "name": f"{site_name} ({total_count})",
+        js_Sites_array.append({
+            "name": f"{Site_name} ({total_count})",
             "marker_name": marker.get_name(),
             "circle_name": circle.get_name()
         })
@@ -113,108 +113,108 @@ def create_map_from_csv(csv_path, output_path):
     print("Ajout du CSS et du JavaScript pour l'interactivité...")
 
     js_dynamic_part = ""
-    for site in js_sites_array:
-        js_dynamic_part += f'"{site["name"]}": {{ marker: {site["marker_name"]}, circle: {site["circle_name"]} }},\n'
+    for Site in js_Sites_array:
+        js_dynamic_part += f'"{Site["name"]}": {{ marker: {Site["marker_name"]}, circle: {Site["circle_name"]} }},\n'
 
     map_var_name = m.get_name()
 
     custom_html_css_js = f"""
     <style>
-        #site-list-container {{
+        #Site-list-container {{
             position: absolute; top: 10px; right: 10px;
             background-color: rgba(255, 255, 255, 0.9);
             padding: 15px; border-radius: 8px; max-height: 80%;
             overflow-y: auto; z-index: 1000;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }}
-        .site-item {{ display: flex; align-items: center; margin-bottom: 5px; }}
-        .site-item input[type="checkbox"] {{ margin-right: 8px; cursor: pointer; }}
-        .site-item label {{ cursor: pointer; margin: 0; }}
+        .Site-item {{ display: flex; align-items: center; margin-bottom: 5px; }}
+        .Site-item input[type="checkbox"] {{ margin-right: 8px; cursor: pointer; }}
+        .Site-item label {{ cursor: pointer; margin: 0; }}
         .leaflet-tooltip {{ font-size: 14px; }}
     </style>
     
-    <div id="site-list-container">
+    <div id="Site-list-container">
         <h5>Sites visités :</h5>
-        <div id="site-list-content"></div>
+        <div id="Site-list-content"></div>
     </div>
 
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function() {{
             
-            const sites_map = {{
+            const Sites_map = {{
                 {js_dynamic_part}
             }};
 
             // Nouvelle fonction pour envoyer les mises à jour au serveur
-            function updateSiteStatusOnServer(siteName, isChecked) {{
+            function updateSiteStatusOnServer(SiteName, isChecked) {{
                 fetch('http://localhost:3000/api/update', {{
                     method: 'POST',
                     headers: {{ 'Content-Type': 'application/json' }},
-                    body: JSON.stringify({{ name: siteName, checked: isChecked }}),
+                    body: JSON.stringify({{ name: SiteName, checked: isChecked }}),
                 }})
                 .catch(error => console.error('Erreur de mise à jour:', error));
             }}
 
-            function toggleSiteVisibility(siteName, isChecked) {{
-                const site = sites_map[siteName];
-                if (!site) return;
+            function toggleSiteVisibility(SiteName, isChecked) {{
+                const Site = Sites_map[SiteName];
+                if (!Site) return;
 
                 const mapObject = {map_var_name};
 
                 if (isChecked) {{ // Si coché, on retire
-                    mapObject.removeLayer(site.circle);
-                    mapObject.removeLayer(site.marker);
+                    mapObject.removeLayer(Site.circle);
+                    mapObject.removeLayer(Site.marker);
                 }} else {{ // Si décoché, on ajoute
-                    site.circle.addTo(mapObject);
-                    site.marker.addTo(mapObject);
+                    Site.circle.addTo(mapObject);
+                    Site.marker.addTo(mapObject);
                 }}
             }}
 
             async function initializeMapState() {{
-                let siteStates = {{}};
+                let SiteStates = {{}};
                 try {{
                     const response = await fetch('http://localhost:3000/api/status');
                     if (response.ok) {{
-                        siteStates = await response.json();
+                        SiteStates = await response.json();
                     }}
                 }} catch (error) {{
                     console.error("Serveur non disponible. L'état des cases ne sera pas sauvegardé.", error);
                 }}
 
-                const container = document.getElementById('site-list-content');
+                const container = document.getElementById('Site-list-content');
                 if (!container) return;
                 container.innerHTML = '';
 
-                const siteNames = Object.keys(sites_map);
-                siteNames.sort();
+                const SiteNames = Object.keys(Sites_map);
+                SiteNames.sort();
 
-                siteNames.forEach(siteName => {{
-                    const isChecked = siteStates[siteName] || false;
+                SiteNames.forEach(SiteName => {{
+                    const isChecked = SiteStates[SiteName] || false;
 
-                    const siteDiv = document.createElement('div');
-                    siteDiv.className = 'site-item';
+                    const SiteDiv = document.createElement('div');
+                    SiteDiv.className = 'Site-item';
 
                     const checkbox = document.createElement('input');
                     checkbox.type = 'checkbox';
-                    checkbox.id = `checkbox-${{siteName}}`;
+                    checkbox.id = `checkbox-${{SiteName}}`;
                     checkbox.checked = isChecked;
                     
                     checkbox.addEventListener('change', () => {{
                         const newState = checkbox.checked;
-                        toggleSiteVisibility(siteName, newState);
-                        updateSiteStatusOnServer(siteName, newState);
+                        toggleSiteVisibility(SiteName, newState);
+                        updateSiteStatusOnServer(SiteName, newState);
                     }});
 
                     const label = document.createElement('label');
-                    label.htmlFor = `checkbox-${{siteName}}`;
-                    label.textContent = siteName;
+                    label.htmlFor = `checkbox-${{SiteName}}`;
+                    label.textContent = SiteName;
 
-                    siteDiv.appendChild(checkbox);
-                    siteDiv.appendChild(label);
-                    container.appendChild(siteDiv);
+                    SiteDiv.appendChild(checkbox);
+                    SiteDiv.appendChild(label);
+                    container.appendChild(SiteDiv);
                     
                     // Appliquer l'état initial à la carte
-                    toggleSiteVisibility(siteName, isChecked);
+                    toggleSiteVisibility(SiteName, isChecked);
                 }});
             }}
             
